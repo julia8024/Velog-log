@@ -37,7 +37,7 @@ struct Provider: IntentTimelineProvider {
                 let entry = SimpleEntry(date: currentDate, entries: posts)
                 
                 // Define when to refresh the widget next
-                let nextRefresh = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
+                let nextRefresh = Calendar.current.date(byAdding: .minute, value: 10, to: currentDate)!
                 let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
                 completion(timeline)
             }
