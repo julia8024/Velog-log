@@ -95,8 +95,7 @@ struct Provider: IntentTimelineProvider {
                 let textModel = try decoder.decode(TextModel.self, from: data)
 //                completion([PostItem(title: "d2dfv", released_at: Date())])
                 
-                let posts = textModel.data.posts.map { PostItem(title: $0.title)}
-//                                                                released_at: $0.released_at) }
+                let posts = textModel.data.posts.map { PostItem(title: $0.title, released_at: $0.released_at) }
                 completion(posts)
                 
             } catch {
@@ -110,7 +109,7 @@ struct Provider: IntentTimelineProvider {
 struct TextModel: Decodable {
     struct Post: Decodable {
         let title: String
-//        let released_at: Date
+        let released_at: String
     }
     let data: DataContainer
     
@@ -127,7 +126,7 @@ struct SimpleEntry: TimelineEntry {
 struct PostItem: Identifiable {
     var id = UUID()
     var title: String
-//    var released_at: Date
+    var released_at: String
 }
 
 
@@ -143,33 +142,30 @@ struct LogWidgetEntryView : View {
             switch widgetFamily {
             case .systemSmall:
                 VStack(alignment: .center) {
-                    Text("released_at")
-//                    Text(entry.date, style: .date)
+                    if !entry.entries.isEmpty {
+    //                    Text(entry.date, style: .date)
+                        Text(formattedDate(dateString: entry.entries.first?.released_at))
+                        
+                        Text("\(daysSinceRelease(releasedAtDateString: entry.entries.first?.released_at)) 일 전")
+                    } else {
+                        Text("Nothing...")
+                    }
                 }
             case .systemMedium:
                 VStack(alignment: .leading) {
                     //            Text(entry.date, style: .time)
                     Text("최신 글")
+                        .font(.system(size: 16))
+                        .fontWeight(.bold)
                     ForEach(entry.entries.prefix(3)) { post in
                         LazyVStack(alignment: .leading) {
-                            Text("\(post.title) -")
-//                                 \(formattedDate(date: post.released_at))")
+                            Text("\(post.title)")
                                 .foregroundColor(Color.black)
                                 .font(.system(size: 14))
                                 .lineLimit(1)
                             Divider()
                         }
                     }
-//                    ForEach(entry.entries.prefix(3), id: \.hashValue) { post in
-//                        LazyVStack(alignment: .leading) {
-//                            Text("\(post)")
-//                                .foregroundColor(Color.black)
-//                                .font(.system(size: 14))
-//                                .lineLimit(1)
-//                            Divider()
-//                        }
-//                        
-//                    }
                 }
             case .systemLarge:
                 Text("large")
@@ -182,11 +178,40 @@ struct LogWidgetEntryView : View {
 }
 
 // Date 포맷을 설정하는 함수
-func formattedDate(date: Date) -> String {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    return dateFormatter.string(from: date)
+func formattedDate(dateString: String?) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // 입력된 문자열 형식에 맞게 설정
+    
+    guard let dateString = dateString, let date = formatter.date(from: dateString) else {
+        return "Invalid Date"
+    }
+    
+    // 원하는 형식으로 날짜를 문자열로 변환
+    formatter.dateFormat = "MMMM dd, yyyy"
+    return formatter.string(from: date)
 }
+
+func daysSinceRelease(releasedAtDateString: String?) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // 입력된 문자열 형식에 맞게 설정
+    
+    guard let releasedAtDateString = releasedAtDateString, let releasedDate = formatter.date(from: releasedAtDateString) else {
+        return "-"
+    }
+    
+    // 현재 날짜
+    let currentDate = Date()
+    
+    // Calendar 객체 생성
+    let calendar = Calendar.current
+    
+    // releasedDate와 currentDate 간의 날짜 차이 계산
+    let components = calendar.dateComponents([.day], from: releasedDate, to: currentDate)
+    
+    // 날짜 차이 반환
+    return String(components.day ?? 0)
+}
+
 
 extension View {
     func widgetBackground() -> some View {
