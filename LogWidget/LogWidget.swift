@@ -14,15 +14,15 @@ struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         print("hello")
         return SimpleEntry(date: Date(), entries: [])
-//                            [PostItem(title: "Loading...", released_at: Date())])
+        //                            [PostItem(title: "Loading...", released_at: Date())])
     }
-        
+    
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         // 데이터 가져오기
         getTexts { posts in
             guard !posts.isEmpty else {
                 completion(SimpleEntry(date: Date(), entries: []))
-//                                        [PostItem(title: "No data!!", released_at: Date())]))
+                //                                        [PostItem(title: "No data!!", released_at: Date())]))
                 return
             }
             let entry = SimpleEntry(date: Date(), entries: posts)
@@ -31,18 +31,18 @@ struct Provider: IntentTimelineProvider {
     }
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-            // 데이터 가져오기
-            getTexts { posts in
-                let currentDate = Date()
-                let entry = SimpleEntry(date: currentDate, entries: posts)
-                
-                // Define when to refresh the widget next
-                let nextRefresh = Calendar.current.date(byAdding: .minute, value: 10, to: currentDate)!
-                let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
-                completion(timeline)
-            }
+        // 데이터 가져오기
+        getTexts { posts in
+            let currentDate = Date()
+            let entry = SimpleEntry(date: currentDate, entries: posts)
+            
+            // Define when to refresh the widget next
+            let nextRefresh = Calendar.current.date(byAdding: .minute, value: 10, to: currentDate)!
+            let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+            completion(timeline)
         }
-
+    }
+    
     private func getTexts(completion: @escaping ([PostItem]) -> ()) {
         guard let url = URL(string: "https://v2.velog.io/graphql") else {
             print("Invalid URL")
@@ -53,7 +53,7 @@ struct Provider: IntentTimelineProvider {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        
         let parameters: [String: Any] = [
             // 여기에 필요한 파라미터를 추가하세요
             "operationName":"Posts",
@@ -65,22 +65,22 @@ struct Provider: IntentTimelineProvider {
             
         ]
         
-
+        
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
             print("Failed to serialize parameters")
             completion([])
             return
         }
-
+        
         request.httpBody = httpBody
-
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error: \(error.localizedDescription)")
                 completion([])
                 return
             }
-
+            
             guard let data = data else {
                 print("No data received")
                 completion([])
@@ -93,14 +93,14 @@ struct Provider: IntentTimelineProvider {
                 
                 
                 let textModel = try decoder.decode(TextModel.self, from: data)
-//                completion([PostItem(title: "d2dfv", released_at: Date())])
+                //                completion([PostItem(title: "d2dfv", released_at: Date())])
                 
                 let posts = textModel.data.posts.map { PostItem(title: $0.title, released_at: $0.released_at) }
                 completion(posts)
                 
             } catch {
                 print("Failed to decode JSON: \(error.localizedDescription)")
-//                completion([PostItem(title: "dkdkdk", released_at: Date())])
+                //                completion([PostItem(title: "dkdkdk", released_at: Date())])
             }
         }.resume()
     }
@@ -141,19 +141,50 @@ struct LogWidgetEntryView : View {
         VStack {
             switch widgetFamily {
             case .systemSmall:
-                VStack(alignment: .center) {
-                    if !entry.entries.isEmpty {
-    //                    Text(entry.date, style: .date)
-                        Text(formattedDate(dateString: entry.entries.first?.released_at))
+                if !entry.entries.isEmpty {
+                    VStack(alignment: .leading) {
+                        Text("최신 글")
+                            .font(.system(size: 14))
+                            .fontWeight(.bold)
+                        Divider()
                         
-                        Text("\(daysSinceRelease(releasedAtDateString: entry.entries.first?.released_at)) 일 전")
-                    } else {
+                        VStack {
+                            if let title = entry.entries.first?.title { // testNumber에 값이 있을 경우
+                                Text(title.splitChar())
+                                    .foregroundColor(Color.black)
+                                    .font(.system(size: 14))
+                                    .lineSpacing(7)
+                                    .lineLimit(3)
+                            } else { // testNumber 가 nil일 경우
+                                Text("")
+                                    .foregroundColor(Color.black)
+                                    .font(.system(size: 14))
+                                    .lineLimit(3)
+                            }
+                        }
+                        .padding(.vertical, 3)
+                        Spacer()
+                        
+                        
+                        HStack() {
+                            Spacer()
+                            Text("\(daysSinceRelease(releasedAtDateString: entry.entries.first?.released_at))")
+                                .foregroundColor(Color.black)
+                                .fontWeight(.bold)
+                                .font(.system(size: 16))
+                                .lineLimit(1)
+                        }
+                        
+                    }
+                } else {
+                    VStack(alignment: .center) {
                         Text("Nothing...")
                     }
+                    
                 }
+                
             case .systemMedium:
                 VStack(alignment: .leading) {
-                    //            Text(entry.date, style: .time)
                     Text("최신 글")
                         .font(.system(size: 16))
                         .fontWeight(.bold)
@@ -209,7 +240,18 @@ func daysSinceRelease(releasedAtDateString: String?) -> String {
     let components = calendar.dateComponents([.day], from: releasedDate, to: currentDate)
     
     // 날짜 차이 반환
-    return String(components.day ?? 0)
+    //    return String(components.day ?? 0)
+    
+    // 날짜 차이 반환
+    if let days = components.day {
+        if days == 0 {
+            return "Today"
+        } else {
+            return "\(days) days ago"
+        }
+    }
+    
+    return "Unknown date"
 }
 
 
@@ -235,6 +277,12 @@ struct LogWidget: Widget {
         
         .configurationDisplayName("Velog 로그")
         .description("Velog의 내 글의 로그를 볼 수 있어요")
+    }
+}
+
+extension String {
+    func splitChar() -> String {
+        return self.split(separator: "").joined(separator: "\u{200B}")
     }
 }
 
