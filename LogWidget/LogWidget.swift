@@ -236,23 +236,27 @@ func daysSinceRelease(releasedAtDateString: String?) -> String {
     // Calendar 객체 생성
     let calendar = Calendar.current
     
-    // releasedDate와 currentDate 간의 날짜 차이 계산
-    let components = calendar.dateComponents([.day], from: releasedDate, to: currentDate)
+    // releasedDate와 currentDate의 자정 시각을 계산
+    let startOfReleasedDate = calendar.startOfDay(for: releasedDate)
+    let startOfCurrentDate = calendar.startOfDay(for: currentDate)
     
-    // 날짜 차이 반환
-    //    return String(components.day ?? 0)
+    // 날짜 차이 계산 (일 단위)
+    let components = calendar.dateComponents([.day], from: startOfReleasedDate, to: startOfCurrentDate)
     
     // 날짜 차이 반환
     if let days = components.day {
         if days == 0 {
-            return "Today"
+            return "Today" // 오늘 작성된 글
+        } else if days == 1 {
+            return "\(days) day ago" // 하루 전 작성된 글
         } else {
-            return "\(days) days ago"
+            return "\(days) days ago" // 며칠 전 작성된 글
         }
     }
     
-    return "Unknown date"
+    return "Unknown date" // 날짜 계산이 불가능한 경우
 }
+
 
 
 extension View {
