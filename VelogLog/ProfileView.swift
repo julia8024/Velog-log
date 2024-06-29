@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
+    @State var inputUserId: String = ""
+    @Binding var isPresented: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            TextField("사용자 ID 입력", text: $inputUserId)
+            Button(action: {
+                UserDefaultsManager.setData(value: inputUserId, key: .userId)
+                isPresented = false
+            }, label: {
+                Text("확인")
+            })
+        }
     }
 }
 
-#Preview {
-    ProfileView()
-}
+//#Preview {
+//    ProfileView()
+//}
