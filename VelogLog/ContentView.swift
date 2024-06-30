@@ -19,16 +19,38 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if (posts.isEmpty) {
-                    Text("리스트가 비어있어요")
-                }
-                else {
-                    List(posts) { post in
-                        NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
-                            Text(post.title)
-                        }
+                VStack {
+                    HStack {
+                        Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "\(userIdTemp)님의 Velog 글")
+                            .font(.system(size: 24))
+                            .fontWeight(.bold)
+                            .padding(.trailing, 10)
+
+                        Button(action: {
+                            self.isPresented.toggle()
+                        }, label: {
+                            Image(systemName: "square.and.pencil")
+                                .foregroundStyle(.blue)
+                                .font(.system(size: 24))
+                        })
+                        Spacer()
                     }
-                    .listStyle(.plain)
+                    .padding(.bottom, 10)
+                }
+                .padding(30)
+                
+                VStack {
+                    if (posts.isEmpty) {
+                        Text("리스트가 비어있어요")
+                    }
+                    else {
+                        List(posts) { post in
+                            NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
+                                Text(post.title)
+                            }
+                        }
+                        .listStyle(.plain)
+                    }
                 }
             }
         }
