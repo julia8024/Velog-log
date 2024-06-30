@@ -36,9 +36,10 @@ struct ContentView: View {
                         })
                         Spacer()
                     }
-                    .padding(.bottom, 10)
                 }
-                .padding(30)
+                .padding(.horizontal, 30)
+                .padding(.top, 30)
+                .padding(.bottom, 10)
                 
                 VStack {
                     if (posts.isEmpty) {
@@ -53,11 +54,27 @@ struct ContentView: View {
                         List(posts) { post in
                             NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
                                 Text(post.title)
+                                    .padding(.leading, 10)
                             }
+                            .padding(.trailing, 10)
                         }
                         .listStyle(.plain)
                     }
                 }
+                .frame(maxWidth: .infinity)
+                .overlay(
+                    
+                    CustomRefresher()
+                        .refreshable {
+                            refreshData()
+                            fetchUserId()
+                        }
+                    .padding(20)
+                    
+                     //오른쪽 하단에 버튼 고정
+                    ,alignment: .bottomTrailing
+                )
+                
             }
         }
         .alert("회원 ID", isPresented: $isPresented) {
