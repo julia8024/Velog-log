@@ -42,7 +42,12 @@ struct ContentView: View {
                 
                 VStack {
                     if (posts.isEmpty) {
-                        Text("리스트가 비어있어요")
+                        VStack {
+                            Spacer()
+                            Text("리스트가 비어있어요")
+                            Spacer()
+                        }
+                        
                     }
                     else {
                         List(posts) { post in
