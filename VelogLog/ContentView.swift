@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @State private var posts: [Post] = []
     @State var isPresented: Bool = false
+    @State var inputUserId: String = ""
     
     var body: some View {
         VStack {
@@ -19,9 +20,11 @@ struct ContentView: View {
                 Text(post.title)
             }
         }
-        .sheet(isPresented: $isPresented) {
-            ProfileView(
-                isPresented: $isPresented)
+        .alert("회원 ID", isPresented: $isPresented) {
+            TextField("회원 ID를 입력하세요", text: $inputUserId)
+            Button("확인") {
+                UserDefaultsManager.setData(value: inputUserId, key: .userId)
+            }
         }
         .onAppear {
             let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
