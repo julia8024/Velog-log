@@ -64,25 +64,39 @@ struct ContentView: View {
             TextField("회원 ID를 입력하세요", text: $inputUserId)
             Button("확인") {
                 UserDefaultsManager.setData(value: inputUserId, key: .userId)
+                fetchUserId()
+                
             }
         }
         .onAppear {
-            let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
-            
-            guard let userId = userId else {
-                isPresented = true
-                return
-            }
-            fetchPosts(userId: userId) { fetchedPosts in
-                if let fetchedPosts = fetchedPosts {
-                    posts = fetchedPosts
-                }
+            refreshData()
+        }
+        .refreshable {
+            refreshData()
+            fetchUserId()
+        }
+    }
+    
+    private func refreshData() {
+        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
+        
+        guard userId != nil else {
+            isPresented = true
+            return
+        }
+        
+        fetchPosts() { fetchedPosts in
+            if let fetchedPosts = fetchedPosts {
+                posts = fetchedPosts
             }
         }
     }
     
+    private func fetchUserId() {
+        self.userIdTemp = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+    }
     
-    private func fetchPosts(userId: String, completion: @escaping ([Post]?) -> Void) {
+    private func fetchPosts(completion: @escaping ([Post]?) -> Void) {
         let url = "https://v2.velog.io/graphql"
         
         
@@ -101,7 +115,7 @@ struct ContentView: View {
             // 여기에 필요한 파라미터를 추가하세요
             "operationName":"Posts",
             "variables": [
-                "username": userId,
+                "username": UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? "",
                 "limit": 100
             ],
             "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n    thumbnail\n    user {\n      id\n      username\n      profile {\n        id\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
