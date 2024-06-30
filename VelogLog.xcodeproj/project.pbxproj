@@ -24,6 +24,7 @@
 		F2A68F692C2FD697006211BE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F2A68F682C2FD697006211BE /* Alamofire */; };
 		F2A68F732C2FF602006211BE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F722C2FF602006211BE /* UserDefaultManager.swift */; };
 		F2A68F782C31417C006211BE /* CustomWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F772C31417C006211BE /* CustomWKWebView.swift */; };
+		F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F7D2C31826F006211BE /* CustomRefresher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		F29A7DA02C1F52590053745D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A68F722C2FF602006211BE /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		F2A68F772C31417C006211BE /* CustomWKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWKWebView.swift; sourceTree = "<group>"; };
+		F2A68F7D2C31826F006211BE /* CustomRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRefresher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				F2A68F772C31417C006211BE /* CustomWKWebView.swift */,
+				F2A68F7D2C31826F006211BE /* CustomRefresher.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				F2A68F782C31417C006211BE /* CustomWKWebView.swift in Sources */,
 				F2A68F732C2FF602006211BE /* UserDefaultManager.swift in Sources */,
 				F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */,
+				F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */,
 				F29A7D812C1F51750053745D /* ContentView.swift in Sources */,
 				F29A7D7F2C1F51750053745D /* VelogLogApp.swift in Sources */,
 				F24054972C2854A700A8C38C /* Post.swift in Sources */,
