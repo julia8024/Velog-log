@@ -84,6 +84,13 @@ struct ContentView: View {
                 fetchUserId()
                 
             }
+            .onChange(of: self.userIdTemp, {
+                fetchPosts() { fetchedPosts in
+                    if let fetchedPosts = fetchedPosts {
+                        posts = fetchedPosts
+                    }
+                }
+            })
         }
         .onAppear {
             refreshData()
