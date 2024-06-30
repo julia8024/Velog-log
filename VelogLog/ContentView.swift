@@ -12,12 +12,24 @@ struct ContentView: View {
     
     @State private var posts: [Post] = []
     @State var isPresented: Bool = false
+    @State var showWeb: Bool = false
     @State var inputUserId: String = ""
+    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
     
     var body: some View {
-        VStack {
-            List(posts) { post in
-                Text(post.title)
+        NavigationView {
+            VStack {
+                if (posts.isEmpty) {
+                    Text("리스트가 비어있어요")
+                }
+                else {
+                    List(posts) { post in
+                        NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
+                            Text(post.title)
+                        }
+                    }
+                    .listStyle(.plain)
+                }
             }
         }
         .alert("회원 ID", isPresented: $isPresented) {
