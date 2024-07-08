@@ -21,10 +21,11 @@
 		F29A7DA12C1F52590053745D /* LogWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F29A7D9D2C1F52580053745D /* LogWidget.intentdefinition */; };
 		F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F29A7D9D2C1F52580053745D /* LogWidget.intentdefinition */; };
 		F29A7DA52C1F52590053745D /* LogWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F29A7D902C1F52570053745D /* LogWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F2A68F692C2FD697006211BE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F2A68F682C2FD697006211BE /* Alamofire */; };
 		F2A68F732C2FF602006211BE /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F722C2FF602006211BE /* UserDefaultManager.swift */; };
 		F2A68F782C31417C006211BE /* CustomWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F772C31417C006211BE /* CustomWKWebView.swift */; };
 		F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F7D2C31826F006211BE /* CustomRefresher.swift */; };
+		F2A68F802C3C57E5006211BE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F2A68F7F2C3C57E5006211BE /* Alamofire */; };
+		F2A68F842C3C57F6006211BE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F2A68F832C3C57F6006211BE /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A68F692C2FD697006211BE /* Alamofire in Frameworks */,
+				F2A68F842C3C57F6006211BE /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A68F802C3C57E5006211BE /* Alamofire in Frameworks */,
 				F29A7D952C1F52570053745D /* SwiftUI.framework in Frameworks */,
 				F29A7D932C1F52570053745D /* WidgetKit.framework in Frameworks */,
 			);
@@ -192,7 +194,7 @@
 			);
 			name = VelogLog;
 			packageProductDependencies = (
-				F2A68F682C2FD697006211BE /* Alamofire */,
+				F2A68F832C3C57F6006211BE /* Alamofire */,
 			);
 			productName = VelogLog;
 			productReference = F29A7D7B2C1F51750053745D /* VelogLog.app */;
@@ -211,6 +213,9 @@
 			dependencies = (
 			);
 			name = LogWidgetExtension;
+			packageProductDependencies = (
+				F2A68F7F2C3C57E5006211BE /* Alamofire */,
+			);
 			productName = LogWidgetExtension;
 			productReference = F29A7D902C1F52570053745D /* LogWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -588,7 +593,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F2A68F682C2FD697006211BE /* Alamofire */ = {
+		F2A68F7F2C3C57E5006211BE /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F24054A22C2FD2C400A8C38C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		F2A68F832C3C57F6006211BE /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F24054A22C2FD2C400A8C38C /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
