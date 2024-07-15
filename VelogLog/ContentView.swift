@@ -53,8 +53,15 @@ struct ContentView: View {
                     else {
                         List(posts) { post in
                             NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
-                                Text(post.title)
-                                    .padding(.leading, 10)
+                                VStack(alignment: .leading) {
+                                    Text(post.title)
+                                        .padding(.bottom, 10)
+                                        .font(.system(size: 16))
+                                    Text(formatDate(date: post.released_at))
+                                        .foregroundColor(.gray)
+                                        .font(.system(size: 14))
+                                }
+                                .padding(.leading, 10)
                             }
                             .padding(.trailing, 10)
                         }
@@ -113,6 +120,20 @@ struct ContentView: View {
             if let fetchedPosts = fetchedPosts {
                 posts = fetchedPosts
             }
+        }
+    }
+    
+    // Date 포맷을 설정하는 함수
+    func formatDate(date: String) -> String {
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        if let isoDate = isoFormatter.date(from: date) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM dd, yyyy"
+            return dateFormatter.string(from: isoDate)
+        } else {
+            return "Invalid Date Format"
         }
     }
     
