@@ -151,13 +151,13 @@ struct LogWidgetEntryView : View {
                         VStack {
                             if let title = entry.entries.first?.title { // testNumber에 값이 있을 경우
                                 Text(title.splitChar())
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Color("DefaultTextColor"))
                                     .font(.system(size: 14))
                                     .lineSpacing(7)
                                     .lineLimit(3)
                             } else { // testNumber 가 nil일 경우
                                 Text("")
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Color("DefaultTextColor"))
                                     .font(.system(size: 14))
                                     .lineLimit(3)
                             }
@@ -169,7 +169,7 @@ struct LogWidgetEntryView : View {
                         HStack() {
                             Spacer()
                             Text("\(daysSinceRelease(releasedAtDateString: entry.entries.first?.released_at))")
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color("DefaultTextColor"))
                                 .fontWeight(.bold)
                                 .font(.system(size: 16))
                                 .lineLimit(1)
@@ -198,7 +198,7 @@ struct LogWidgetEntryView : View {
                     ForEach(entry.entries.prefix(3)) { post in
                         LazyVStack(alignment: .leading) {
                             Text("\(post.title)")
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color("DefaultTextColor"))
                                 .font(.system(size: 14))
                                 .lineLimit(1)
                             Divider()

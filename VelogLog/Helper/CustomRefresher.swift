@@ -32,12 +32,12 @@ struct CustomRefresher: View {
                     label: {
                         VStack {
                             Image(systemName: "arrow.clockwise")
-                                .foregroundStyle(Color("DefaultTextColor"))
+                                .foregroundStyle(Color("DefaultColor"))
                                 .font(.system(size: 20))
                                 .rotationEffect(.degrees(rotationAngle))
                         }
                         .padding(15)
-                        .background(Color("DefaultColor"))
+                        .background(Color("DefaultTextColor"))
                         .clipShape(Circle())
                     }
                 )
