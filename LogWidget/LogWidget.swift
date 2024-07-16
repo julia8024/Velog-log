@@ -58,7 +58,7 @@ struct Provider: IntentTimelineProvider {
             // 여기에 필요한 파라미터를 추가하세요
             "operationName":"Posts",
             "variables": [
-                "username":"julia8024",
+                "username": UserDefaults.shared.string(forKey: "userId") ?? "",
                 "limit": 6
             ],
             "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n    thumbnail\n    user {\n      id\n      username\n      profile {\n        id\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
@@ -185,9 +185,16 @@ struct LogWidgetEntryView : View {
                 
             case .systemMedium:
                 VStack(alignment: .leading) {
-                    Text("최신 글")
-                        .font(.system(size: 16))
-                        .fontWeight(.bold)
+                    HStack {
+                        Text("최신 글")
+                            .font(.system(size: 16))
+                            .fontWeight(.bold)
+                            .padding(.trailing, 4)
+                        Text(UserDefaults.shared.string(forKey: "userId")!)
+                            .font(.system(size: 14))
+                            .foregroundColor(Color.gray)
+                    }
+                    
                     ForEach(entry.entries.prefix(3)) { post in
                         LazyVStack(alignment: .leading) {
                             Text("\(post.title)")
@@ -296,3 +303,11 @@ extension String {
 //            .previewContext(WidgetPreviewContext(family: .systemSmall))
 //    }
 //}
+
+
+extension UserDefaults {
+    static var shared: UserDefaults {
+        let appGroupId = "group.undefined.VelogLog"
+        return UserDefaults(suiteName: appGroupId)!
+    }
+}

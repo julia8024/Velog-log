@@ -15,7 +15,8 @@ struct ContentView: View {
     @State var isPresented: Bool = false
     @State var showWeb: Bool = false
     @State var inputUserId: String = ""
-    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+//    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+    @State var userIdTemp: String = UserDefaults.shared.string(forKey: "userId") ?? "" // set
     
     var body: some View {
         NavigationView {
@@ -29,6 +30,8 @@ struct ContentView: View {
 
                         Button(action: {
                             self.isPresented.toggle()
+                            refreshData()
+                            
                         }, label: {
                             Image(systemName: "square.and.pencil")
                                 .foregroundStyle(.blue)
@@ -87,7 +90,8 @@ struct ContentView: View {
         .alert("회원 ID", isPresented: $isPresented) {
             TextField("회원 ID를 입력하세요", text: $inputUserId)
             Button("확인") {
-                UserDefaultsManager.setData(value: inputUserId, key: .userId)
+//                UserDefaultsManager.setData(value: inputUserId, key: .userId)
+                UserDefaults.shared.set(inputUserId, forKey: "userId")
                 fetchUserId()
                 
             }
@@ -109,7 +113,8 @@ struct ContentView: View {
     }
     
     private func refreshData() {
-        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
+//        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
+        let userId = UserDefaults.shared.string(forKey: "userId")
         
         guard userId != nil else {
             isPresented = true
@@ -138,10 +143,16 @@ struct ContentView: View {
     }
     
     private func fetchUserId() {
-        self.userIdTemp = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+//        self.userIdTemp = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+        self.userIdTemp = UserDefaults.shared.string(forKey: "userId") ?? ""
     }
     
     private func fetchPosts(completion: @escaping ([Post]?) -> Void) {
+        
+        if UserDefaults.shared.string(forKey: "userId") == "" {
+            return completion([])
+        }
+        
         let url = "https://v2.velog.io/graphql"
         
         
@@ -160,10 +171,10 @@ struct ContentView: View {
             // 여기에 필요한 파라미터를 추가하세요
             "operationName":"Posts",
             "variables": [
-                "username": UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? "",
+                "username": UserDefaults.shared.string(forKey: "userId")!,
                 "limit": 100
             ],
-            "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n    thumbnail\n    user {\n      id\n      username\n      profile {\n        id\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
+            "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n        user {\n      id\n      username\n      profile {\n        id\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
         ]
         
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
@@ -202,3 +213,10 @@ struct ContentView: View {
 //        ContentView()
 //    }
 //}
+
+extension UserDefaults {
+    static var shared: UserDefaults {
+        let appGroupId = "group.undefined.VelogLog"
+        return UserDefaults(suiteName: appGroupId)!
+    }
+}

@@ -11,7 +11,7 @@ struct Post: Decodable, Identifiable {
     var id: String
     var title: String
     var short_description: String
-    var thumbnail: String
+//    var thumbnail: String
 //    var user: User
     var url_slug: String
     var released_at: String
@@ -27,7 +27,7 @@ struct Post: Decodable, Identifiable {
         id = ""
         title = ""
         short_description = ""
-        thumbnail = ""
+//        thumbnail = ""
 //        user = User(id: "", username: "", profile: Profile(id: "", thumbnail: "", __typename: ""), __typename: "")
         url_slug = ""
         released_at = ""
