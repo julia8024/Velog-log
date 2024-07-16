@@ -18,6 +18,10 @@ struct ContentView: View {
 //    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
     @State var userIdTemp: String = UserDefaults.shared.string(forKey: "userId") ?? "" // set
     
+//    @State private var currentPage = 1
+    private let pageSize = 100
+//    private let thresholdDistance: CGFloat = 100 // 스크롤 도달 임계값
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -27,7 +31,7 @@ struct ContentView: View {
                             .font(.system(size: 24))
                             .fontWeight(.bold)
                             .padding(.trailing, 10)
-
+                        
                         Button(action: {
                             self.isPresented.toggle()
                             refreshData()
@@ -40,7 +44,7 @@ struct ContentView: View {
                         Spacer()
                     }
                 }
-                .padding(.horizontal, 30)
+                .padding(.horizontal, 20)
                 .padding(.top, 30)
                 .padding(.bottom, 10)
                 
@@ -54,21 +58,51 @@ struct ContentView: View {
                         
                     }
                     else {
-                        List(posts) { post in
-                            NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
-                                VStack(alignment: .leading) {
-                                    Text(post.title)
-                                        .padding(.bottom, 10)
-                                        .font(.system(size: 16))
-                                    Text(formatDate(date: post.released_at))
-                                        .foregroundColor(.gray)
-                                        .font(.system(size: 14))
+                        ScrollView {
+                            LazyVStack {
+                                ForEach(posts) { post in
+                                    NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
+                                        HStack {
+                                            VStack(alignment: .leading, spacing: 6) {
+                                                Text(post.title)
+                                                    .foregroundColor(Color("DefaultTextColor"))
+                                                    .lineSpacing(2)
+                                                    .font(.system(size: 16))
+                                                    .multilineTextAlignment(.leading)
+                                                Text(formatDate(date: post.released_at))
+                                                    .foregroundColor(.gray)
+                                                    .font(.system(size: 14))
+                                                
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            
+                                            Spacer(minLength: 4)
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.gray)
+                                        }
+                                        .padding(.horizontal, 20)
+                                    }
+                                    .padding(.vertical, 4)
+                                    Divider()
                                 }
-                                .padding(.leading, 10)
                             }
-                            .padding(.trailing, 10)
                         }
-                        .listStyle(.plain)
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(.yellow)
+//                        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+//                            // 스크롤 위치를 확인하여 추가적으로 데이터를 불러옴
+//                            print("벨류!!", value)
+//                            if shouldLoadMoreData(offset: value) {
+//                                print("더 불러와!")
+//                                fetchPosts() { fetchedPosts in
+//                                    if let fetchedPosts = fetchedPosts {
+//                                        posts = fetchedPosts
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -79,9 +113,9 @@ struct ContentView: View {
                             refreshData()
                             fetchUserId()
                         }
-                    .padding(20)
+                        .padding(20)
                     
-                     //오른쪽 하단에 버튼 고정
+                    //오른쪽 하단에 버튼 고정
                     ,alignment: .bottomTrailing
                 )
                 
@@ -93,6 +127,7 @@ struct ContentView: View {
 //                UserDefaultsManager.setData(value: inputUserId, key: .userId)
                 UserDefaults.shared.set(inputUserId, forKey: "userId")
                 fetchUserId()
+//                currentPage = 1
                 
             }
             .onChange(of: self.userIdTemp, {
@@ -172,7 +207,8 @@ struct ContentView: View {
             "operationName":"Posts",
             "variables": [
                 "username": UserDefaults.shared.string(forKey: "userId")!,
-                "limit": 100
+                "limit": pageSize
+//                "offset": (currentPage - 1) * pageSize
             ],
             "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n        user {\n      id\n      username\n      profile {\n        id\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
         ]
@@ -205,8 +241,49 @@ struct ContentView: View {
             var posts: [Post]
         }
     }
+    
+//    private func shouldLoadMoreData(offset: CGFloat) -> Bool {
+//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//              let window = windowScene.windows.first else {
+//            return false
+//        }
+//        
+//        // window의 frame 속성이 nil이 아닌 경우에만 스크롤 높이를 확인
+//        
+//        let scrollViewHeight = window.frame.height
+//        
+//        // 스크롤이 일정 거리(thresholdDistance) 위로 올라갈 때 데이터 추가 요청
+//        return offset > scrollViewHeight - thresholdDistance
+//        
+//    }
+
+
 }
 
+// 스크롤 위치를 감지하기 위한 PreferenceKey 정의
+//struct ScrollOffsetPreferenceKey: PreferenceKey {
+//    typealias Value = CGFloat
+//    
+//    static var defaultValue: CGFloat = 0
+//    
+//    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+//        value = nextValue()
+//    }
+//}
+//
+//extension View {
+//    // 스크롤 위치를 감지하여 PreferenceKey에 전달
+//    func trackScrollOffset() -> some View {
+//        background(
+//            GeometryReader { geometry in
+//                Color.clear.preference(
+//                    key: ScrollOffsetPreferenceKey.self,
+//                    value: geometry.frame(in: .global).minY
+//                )
+//            }
+//        )
+//    }
+//}
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
