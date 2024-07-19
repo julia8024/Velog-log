@@ -26,6 +26,7 @@
 		F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F7D2C31826F006211BE /* CustomRefresher.swift */; };
 		F2A68F802C3C57E5006211BE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F2A68F7F2C3C57E5006211BE /* Alamofire */; };
 		F2A68F842C3C57F6006211BE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F2A68F832C3C57F6006211BE /* Alamofire */; };
+		F2A68F8E2C4A92AC006211BE /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F8D2C4A92AC006211BE /* HelpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		F2A68F7D2C31826F006211BE /* CustomRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRefresher.swift; sourceTree = "<group>"; };
 		F2A68F8B2C4584AB006211BE /* VelogLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VelogLog.entitlements; sourceTree = "<group>"; };
 		F2A68F8C2C458522006211BE /* LogWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LogWidgetExtension.entitlements; sourceTree = "<group>"; };
+		F2A68F8D2C4A92AC006211BE /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			children = (
 				F2A68F772C31417C006211BE /* CustomWKWebView.swift */,
 				F2A68F7D2C31826F006211BE /* CustomRefresher.swift */,
+				F2A68F8D2C4A92AC006211BE /* HelpView.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */,
 				F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */,
 				F29A7D812C1F51750053745D /* ContentView.swift in Sources */,
+				F2A68F8E2C4A92AC006211BE /* HelpView.swift in Sources */,
 				F29A7D7F2C1F51750053745D /* VelogLogApp.swift in Sources */,
 				F24054972C2854A700A8C38C /* Post.swift in Sources */,
 			);

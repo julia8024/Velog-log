@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var user: User?
     
     @State var isPresented: Bool = false
+
     @State var showWeb: Bool = false
     @State var inputUserId: String = ""
 //    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
@@ -49,7 +50,7 @@ struct ContentView: View {
                                 .frame(width: 48)
                                 
                                 
-                                VStack(alignment: .leading, spacing: 4) {
+                                VStack(alignment: .leading, spacing: 2) {
                                     Text((user?.profile.display_name)!)
                                         .font(.system(size: 20))
                                         .fontWeight(.bold)
@@ -80,6 +81,14 @@ struct ContentView: View {
                                 .foregroundStyle(.blue)
                                 .font(.system(size: 24))
                         })
+                        .padding(.trailing, 2)
+                        
+
+                        NavigationLink { HelpView() } label: {
+                            Image(systemName: "questionmark.circle")
+                            .foregroundStyle(.gray)
+                            .font(.system(size: 24))
+                        }
                     }
                 }
                 .padding(.horizontal, 20)
