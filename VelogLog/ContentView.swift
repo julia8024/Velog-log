@@ -12,6 +12,8 @@ import WebKit
 struct ContentView: View {
     
     @State private var posts: [Post] = []
+    @State private var user: User?
+    
     @State var isPresented: Bool = false
     @State var showWeb: Bool = false
     @State var inputUserId: String = ""
@@ -26,11 +28,48 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 VStack {
+                    
                     HStack {
-                        Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "\(userIdTemp)님의 Velog 글")
-                            .font(.system(size: 24))
-                            .fontWeight(.bold)
-                            .padding(.trailing, 10)
+                        if (user != nil && !userIdTemp.isEmpty) {
+                            HStack {
+                                AsyncImage(url: URL(string: (user?.profile.thumbnail)!)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } placeholder: {
+                                    Image(systemName: "photo")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding(14)
+                                        .foregroundColor(Color.gray)
+                                        
+                                }
+                                .background(Color("LightGrayColor"))
+                                .clipShape(Circle())
+                                .frame(width: 48)
+                                
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text((user?.profile.display_name)!)
+                                        .font(.system(size: 20))
+                                        .fontWeight(.bold)
+                                    
+                                    Text((user?.profile.short_bio)!)
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.gray)
+                                }
+                                
+                                
+                                
+                            }
+                        } else {
+                            Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "사용자를 찾을 수 없어요")
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                                .padding(.trailing, 10)
+                        }
+                        
+                        Spacer(minLength: 4)
                         
                         Button(action: {
                             self.isPresented.toggle()
@@ -41,7 +80,6 @@ struct ContentView: View {
                                 .foregroundStyle(.blue)
                                 .font(.system(size: 24))
                         })
-                        Spacer()
                     }
                 }
                 .padding(.horizontal, 20)
@@ -131,6 +169,11 @@ struct ContentView: View {
                 
             }
             .onChange(of: self.userIdTemp, {
+                fetchUser() { fetchedUser in
+                    if let fetchedUser = fetchedUser {
+                        user = fetchedUser
+                    }
+                }
                 fetchPosts() { fetchedPosts in
                     if let fetchedPosts = fetchedPosts {
                         posts = fetchedPosts
@@ -154,6 +197,12 @@ struct ContentView: View {
         guard userId != nil else {
             isPresented = true
             return
+        }
+        
+        fetchUser() { fetchedUser in
+            if let fetchedUser = fetchedUser {
+                user = fetchedUser
+            }
         }
         
         fetchPosts() { fetchedPosts in
@@ -180,6 +229,56 @@ struct ContentView: View {
     private func fetchUserId() {
 //        self.userIdTemp = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
         self.userIdTemp = UserDefaults.shared.string(forKey: "userId") ?? ""
+    }
+    
+    private func fetchUser(completion: @escaping (User?) -> Void) {
+        if UserDefaults.shared.string(forKey: "userId") == "" {
+            return completion(nil)
+        }
+        
+        let url = "https://v2.velog.io/graphql"
+        
+        
+        // URLRequest 객체 생성 (url 전달)
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        
+        // 헤더 정보 설정
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        // json 인코더 생성
+        let encoder = JSONEncoder()
+        
+        // json 출력 시 예쁘게 출력
+        encoder.outputFormatting = .prettyPrinted
+        let parameters: [String: Any] = [
+            // 여기에 필요한 파라미터를 추가하세요
+            "operationName":"User",
+            "variables": [
+                "username": UserDefaults.shared.string(forKey: "userId")!,
+//                "offset": (currentPage - 1) * pageSize
+            ],
+            "query":"query User($username: String) {\n  user(username: $username) {\n    id\n    username\n    profile\n {\n      id\n      display_name\n      short_bio\n      thumbnail\n        __typename\n }\n   __typename\n }\n }\n"
+        ]
+        
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
+            print("Failed to serialize parameters")
+            completion(nil)
+            return
+        }
+        
+        request.httpBody = httpBody
+        
+        AF.request(request).responseDecodable(of: UserResponse.self) { response in
+            // responseDecodable은 결과를 PostListResponse 구조체로 디코딩한다.
+            switch response.result {
+            case .success(let userResponse):
+                // postListResponse의 data.posts를 completion handler를 통해 외부로 전달한다.
+                completion(userResponse.data.user)
+            case .failure(let error):
+                print("Error fetching posts: \(error)")
+                completion(nil) // 에러 발생 시 nil을 반환하여 외부에서 에러 처리 가능하도록 한다.
+            }
+        }
     }
     
     private func fetchPosts(completion: @escaping ([Post]?) -> Void) {
@@ -210,7 +309,7 @@ struct ContentView: View {
                 "limit": pageSize
 //                "offset": (currentPage - 1) * pageSize
             ],
-            "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n        user {\n      id\n      username\n      profile {\n        id\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
+            "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n        user {\n      id\n      username\n      profile {\n        id\n        display_name\n      short_bio\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
         ]
         
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
@@ -231,6 +330,14 @@ struct ContentView: View {
                 print("Error fetching posts: \(error)")
                 completion(nil) // 에러 발생 시 nil을 반환하여 외부에서 에러 처리 가능하도록 한다.
             }
+        }
+    }
+    
+    struct UserResponse: Decodable {
+        var data: DataWrapper
+        
+        struct DataWrapper: Decodable {
+            var user: User
         }
     }
     
