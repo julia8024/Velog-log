@@ -86,8 +86,8 @@ struct ContentView: View {
 
                         NavigationLink { HelpView() } label: {
                             Image(systemName: "questionmark.circle")
-                            .foregroundStyle(.gray)
-                            .font(.system(size: 24))
+                                .foregroundStyle(.gray)
+                                .font(.system(size: 24))
                         }
                     }
                 }
@@ -339,22 +339,6 @@ struct ContentView: View {
                 print("Error fetching posts: \(error)")
                 completion(nil) // 에러 발생 시 nil을 반환하여 외부에서 에러 처리 가능하도록 한다.
             }
-        }
-    }
-    
-    struct UserResponse: Decodable {
-        var data: DataWrapper
-        
-        struct DataWrapper: Decodable {
-            var user: User
-        }
-    }
-    
-    struct PostListResponse: Decodable {
-        var data: DataWrapper
-        
-        struct DataWrapper: Decodable {
-            var posts: [Post]
         }
     }
     
