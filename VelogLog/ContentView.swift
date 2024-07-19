@@ -168,8 +168,8 @@ struct ContentView: View {
                 
             }
         }
-        .alert("회원 ID", isPresented: $isPresented) {
-            TextField("회원 ID를 입력하세요", text: $inputUserId)
+        .alert("사용자 ID", isPresented: $isPresented) {
+            TextField("사용자 ID를 입력하세요", text: $inputUserId)
             Button("확인") {
 //                UserDefaultsManager.setData(value: inputUserId, key: .userId)
                 UserDefaults.shared.set(inputUserId, forKey: "userId")
