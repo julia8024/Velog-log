@@ -64,10 +64,10 @@ struct HelpView: View {
                 Divider()
                 
                 VStack(alignment: .leading) {
-                    Text("사용 후기")
+                    Text("피드백")
                         .modifier(Title())
                     
-                    Text("사용 후기를 남겨주세요!\n궁금한 점이나 개선 사항 모두 환영합니다 ☺️")
+                    Text("피드백을 남겨주세요!\n궁금한 점이나 개선 사항 모두 환영합니다 ☺️")
                         .modifier(BodyText(fontWeight: .light))
                         .padding(.bottom, 6)
                     
