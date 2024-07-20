@@ -148,13 +148,13 @@ struct MailComposeViewControllerWrapper: UIViewControllerRepresentable {
     func handleMailResult(_ result: MFMailComposeResult) {
         switch result {
         case .cancelled:
-            showAlertWithMessage("피드백 메일이 취소되었습니다")
+            showAlertWithMessage("피드백 메일 발송이 취소되었습니다")
         case .saved:
             showAlertWithMessage("피드백 메일이 저장되었습니다")
         case .sent:
             showAlertWithMessage("피드백 메일이 발송되었습니다\n*메일 앱에서 발송 여부를 확인해주세요")
         case .failed:
-            showAlertWithMessage("피드백 메일 전송에 실패하였습니다")
+            showAlertWithMessage("피드백 메일 발송에 실패하였습니다")
         @unknown default:
             showAlertWithMessage("문제가 발생했습니다. 잠시 후 다시 시도해주세요")
         }
