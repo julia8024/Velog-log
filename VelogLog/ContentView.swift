@@ -21,9 +21,7 @@ struct ContentView: View {
 //    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
     @State var userIdTemp: String = UserDefaults.shared.string(forKey: "userId") ?? "" // set
     
-//    @State private var currentPage = 1
-    private let pageSize = 100
-//    private let thresholdDistance: CGFloat = 100 // 스크롤 도달 임계값
+    let pageSize = 10
     
     var body: some View {
         NavigationView {
@@ -108,49 +106,56 @@ struct ContentView: View {
                         ScrollView {
                             LazyVStack {
                                 ForEach(posts) { post in
-                                    NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
-                                        HStack {
-                                            VStack(alignment: .leading, spacing: 6) {
-                                                Text(post.title)
-                                                    .foregroundColor(Color("DefaultTextColor"))
-                                                    .lineSpacing(2)
-                                                    .font(.system(size: 16))
-                                                    .multilineTextAlignment(.leading)
-                                                Text(formatDate(date: post.released_at))
-                                                    .foregroundColor(.gray)
-                                                    .font(.system(size: 14))
+                                    VStack {
+                                        NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
+                                            HStack {
+                                                VStack(alignment: .leading, spacing: 6) {
+                                                    Text(post.title)
+                                                        .foregroundColor(Color("DefaultTextColor"))
+                                                        .lineSpacing(2)
+                                                        .font(.system(size: 16))
+                                                        .multilineTextAlignment(.leading)
+                                                    Text(formatDate(date: post.released_at))
+                                                        .foregroundColor(.gray)
+                                                        .font(.system(size: 14))
+                                                    
+                                                }
+                                                .frame(maxWidth: .infinity, alignment: .leading)
                                                 
+                                                Spacer(minLength: 4)
+                                                
+                                                Image(systemName: "chevron.right")
+                                                    .font(.system(size: 14))
+                                                    .foregroundColor(.gray)
                                             }
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            
-                                            Spacer(minLength: 4)
-                                            
-                                            Image(systemName: "chevron.right")
-                                                .font(.system(size: 14))
-                                                .foregroundColor(.gray)
+                                            .padding(.horizontal, 20)
                                         }
-                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 4)
+                                        Divider()
                                     }
-                                    .padding(.vertical, 4)
-                                    Divider()
+                                    .onAppear {
+                                        guard let index = posts.firstIndex(where: {$0.id == post.id}) else { return }
+                                        
+                                        if index % pageSize == (pageSize - 1) {
+                                            Task {
+                                                do {
+                                                    try await loadMorePosts()
+                                                } catch (let error) {
+                                                    print("Unable to get data : \(error)")
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
+//                                .trackScrollOffset()
                             }
+//                            .trackScrollOffset()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            
                         }
-//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                        .background(.yellow)
-//                        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-//                            // 스크롤 위치를 확인하여 추가적으로 데이터를 불러옴
-//                            print("벨류!!", value)
-//                            if shouldLoadMoreData(offset: value) {
-//                                print("더 불러와!")
-//                                fetchPosts() { fetchedPosts in
-//                                    if let fetchedPosts = fetchedPosts {
-//                                        posts = fetchedPosts
-//                                    }
-//                                }
-//                            }
-//                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
+
                 }
                 .frame(maxWidth: .infinity)
                 .overlay(
@@ -174,7 +179,6 @@ struct ContentView: View {
 //                UserDefaultsManager.setData(value: inputUserId, key: .userId)
                 UserDefaults.shared.set(inputUserId, forKey: "userId")
                 fetchUserId()
-//                currentPage = 1
                 
             }
             .onChange(of: self.userIdTemp, {
@@ -183,7 +187,8 @@ struct ContentView: View {
                         user = fetchedUser
                     }
                 }
-                fetchPosts() { fetchedPosts in
+                
+                fetchPosts(cursor: "") { fetchedPosts in
                     if let fetchedPosts = fetchedPosts {
                         posts = fetchedPosts
                     }
@@ -214,7 +219,7 @@ struct ContentView: View {
             }
         }
         
-        fetchPosts() { fetchedPosts in
+        fetchPosts(cursor: "") { fetchedPosts in
             if let fetchedPosts = fetchedPosts {
                 posts = fetchedPosts
             }
@@ -240,6 +245,15 @@ struct ContentView: View {
         self.userIdTemp = UserDefaults.shared.string(forKey: "userId") ?? ""
     }
     
+    private func loadMorePosts() async {
+        let lastPostId = posts.isEmpty ? "" : posts[posts.count - 1].id
+        fetchPosts(cursor: lastPostId) { fetchedPosts in
+            if let fetchedPosts = fetchedPosts {
+                self.posts.append(contentsOf: fetchedPosts)
+            }
+        }
+    }
+    
     private func fetchUser(completion: @escaping (User?) -> Void) {
         if UserDefaults.shared.string(forKey: "userId") == "" {
             return completion(nil)
@@ -263,8 +277,7 @@ struct ContentView: View {
             // 여기에 필요한 파라미터를 추가하세요
             "operationName":"User",
             "variables": [
-                "username": UserDefaults.shared.string(forKey: "userId")!,
-//                "offset": (currentPage - 1) * pageSize
+                "username": UserDefaults.shared.string(forKey: "userId")!
             ],
             "query":"query User($username: String) {\n  user(username: $username) {\n    id\n    username\n    profile\n {\n      id\n      display_name\n      short_bio\n      thumbnail\n        __typename\n }\n   __typename\n }\n }\n"
         ]
@@ -290,7 +303,7 @@ struct ContentView: View {
         }
     }
     
-    private func fetchPosts(completion: @escaping ([Post]?) -> Void) {
+    private func fetchPosts(cursor: String?, completion: @escaping ([Post]?) -> Void) {
         
         if UserDefaults.shared.string(forKey: "userId") == "" {
             return completion([])
@@ -315,8 +328,8 @@ struct ContentView: View {
             "operationName":"Posts",
             "variables": [
                 "username": UserDefaults.shared.string(forKey: "userId")!,
-                "limit": pageSize
-//                "offset": (currentPage - 1) * pageSize
+                "limit": pageSize,
+                "cursor": cursor ?? nil
             ],
             "query":"query Posts($cursor: ID, $username: String, $temp_only: Boolean, $tag: String, $limit: Int) {\n  posts(cursor: $cursor, username: $username, temp_only: $temp_only, tag: $tag, limit: $limit) {\n    id\n    title\n    short_description\n        user {\n      id\n      username\n      profile {\n        id\n        display_name\n      short_bio\n        thumbnail\n        __typename\n      }\n      __typename\n    }\n    url_slug\n    released_at\n    updated_at\n    comments_count\n    tags\n    is_private\n    likes\n    __typename\n  }\n}\n"
         ]
@@ -341,49 +354,9 @@ struct ContentView: View {
             }
         }
     }
-    
-//    private func shouldLoadMoreData(offset: CGFloat) -> Bool {
-//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//              let window = windowScene.windows.first else {
-//            return false
-//        }
-//        
-//        // window의 frame 속성이 nil이 아닌 경우에만 스크롤 높이를 확인
-//        
-//        let scrollViewHeight = window.frame.height
-//        
-//        // 스크롤이 일정 거리(thresholdDistance) 위로 올라갈 때 데이터 추가 요청
-//        return offset > scrollViewHeight - thresholdDistance
-//        
-//    }
-
 
 }
 
-// 스크롤 위치를 감지하기 위한 PreferenceKey 정의
-//struct ScrollOffsetPreferenceKey: PreferenceKey {
-//    typealias Value = CGFloat
-//    
-//    static var defaultValue: CGFloat = 0
-//    
-//    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-//        value = nextValue()
-//    }
-//}
-//
-//extension View {
-//    // 스크롤 위치를 감지하여 PreferenceKey에 전달
-//    func trackScrollOffset() -> some View {
-//        background(
-//            GeometryReader { geometry in
-//                Color.clear.preference(
-//                    key: ScrollOffsetPreferenceKey.self,
-//                    value: geometry.frame(in: .global).minY
-//                )
-//            }
-//        )
-//    }
-//}
 
 //struct ContentView_Previews: PreviewProvider {
 //    static var previews: some View {
