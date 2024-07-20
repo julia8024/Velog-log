@@ -185,6 +185,8 @@ struct ContentView: View {
                 fetchUser() { fetchedUser in
                     if let fetchedUser = fetchedUser {
                         user = fetchedUser
+                    } else {
+                        user = nil
                     }
                 }
                 
@@ -216,6 +218,8 @@ struct ContentView: View {
         fetchUser() { fetchedUser in
             if let fetchedUser = fetchedUser {
                 user = fetchedUser
+            } else {
+                user = nil
             }
         }
         
