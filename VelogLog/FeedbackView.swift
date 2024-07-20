@@ -9,7 +9,7 @@ import SwiftUI
 import MessageUI
 
 struct FeedbackView: View {
-    var maxRating = 5
+    var maxRating: Int = 5
     
     var offImage = Image(systemName: "star")
     var onImage = Image(systemName: "star.fill")
@@ -17,11 +17,11 @@ struct FeedbackView: View {
     @State var ratingValue : Int = 5
     @State var messageBody: String = ""
     
-    @State private var isShowingMailView = false
+    @State private var isShowingMailView: Bool = false
     @State private var result: Result<MFMailComposeResult, Error>? = nil
     
-    @State private var showAlert = false
-    @State private var alertMessage = ""
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     
     var body: some View {
         VStack {
