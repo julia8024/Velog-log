@@ -56,6 +56,7 @@ struct MainView: View {
                                     Text((user?.profile.short_bio)!)
                                         .font(.system(size: 14))
                                         .foregroundColor(.gray)
+                                        .lineLimit(1)
                                 }
                                 
                                 
