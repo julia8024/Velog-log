@@ -12,11 +12,12 @@ struct SplashView: View {
     var body: some View {
         VStack {
             VStack {
-                Image("AppIcon")
+                Image("AppIconForSplash")
                     .resizable()
                     .aspectRatio(1.0, contentMode: .fit)
                     .clipped()
-                    .padding(.horizontal, 80)
+                    .padding(.horizontal, 120)
+                    .padding(.bottom, 80)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
