@@ -17,6 +17,8 @@ struct HelpView: View {
     let email: String = "julia8024@naver.com"
     @State var showCopyAlert: Bool = false
     
+    @State var alertMessage: String = ""
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
@@ -84,8 +86,7 @@ struct HelpView: View {
                         Spacer()
                         
                         Button(action: {
-                            UIPasteboard.general.string = email
-                            showCopyAlert = true
+                            copyToClipboard(email)
                             
                         }, label: {
                             Image(systemName: "square.on.square")
@@ -94,8 +95,8 @@ struct HelpView: View {
                             
                         })
                         .alert(isPresented: $showCopyAlert) {
-                                    Alert(title: Text("알림"), message: Text("클립보드에 복사되었습니다!"), dismissButton: .default(Text("확인")))
-                                }
+                            Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+                        }
                     }
                     .padding(20)
                     .overlay(
@@ -111,6 +112,44 @@ struct HelpView: View {
             .padding(30)
         }
         
+    }
+    
+    func copyToClipboard(_ text: String) {
+        
+        // 문자열이 비어있는 경우 예외처리
+        guard !text.isEmpty else {
+            alertMessage = ClipboardCopyStatus.emptyString.message
+            showCopyAlert = true
+            return
+        }
+
+        if UIPasteboard.general.hasStrings {
+            // 복사 성공
+            UIPasteboard.general.string = text
+            alertMessage = ClipboardCopyStatus.success.message
+        } else {
+            // 접근 권한 없어 복사 실패
+            alertMessage = ClipboardCopyStatus.success.message
+        }
+        showCopyAlert = true
+    }
+
+}
+
+enum ClipboardCopyStatus {
+    case success
+    case emptyString
+    case failAccess
+
+    var message: String {
+        switch self {
+        case .success:
+            return "클립보드에 복사되었습니다!"
+        case .emptyString:
+            return "클립보드 복사에 실패했습니다"
+        case .failAccess:
+            return "클립보드 복사에 실패했습니다\n설정에서 권한을 확인해주세요"
+        }
     }
 }
 
