@@ -327,7 +327,7 @@ extension String {
 
 extension UserDefaults {
     static var shared: UserDefaults {
-        let appGroupId = "group.undefined.VelogLog"
+        let appGroupId = "group.seheeJang.VelogLog"
         return UserDefaults(suiteName: appGroupId)!
     }
 }
