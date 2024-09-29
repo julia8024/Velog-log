@@ -1,5 +1,5 @@
 //
-//  WKWebViewPractice.swift
+//  CustomWKWebView.swift
 //  VelogLog
 //
 //  Created by 장세희 on 6/30/24.

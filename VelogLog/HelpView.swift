@@ -54,7 +54,7 @@ struct HelpView: View {
                                 Text(" | 디자인하는 개발자")
                                     .modifier(BodyText(fontWeight: .light))
                             }
-                            NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@julia8024/posts")) {
+                            NavigationLink(destination: DetailView(url: "https://velog.io/@julia8024/posts")) {
                                 Text("velog 바로가기")
                                     .modifier(BodyText(fontWeight: .regular))
                             }

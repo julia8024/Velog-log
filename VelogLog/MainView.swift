@@ -108,7 +108,7 @@ struct MainView: View {
                             LazyVStack {
                                 ForEach(posts) { post in
                                     VStack {
-                                        NavigationLink(destination: CustomWKWebView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
+                                        NavigationLink(destination: DetailView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
                                             HStack {
                                                 VStack(alignment: .leading, spacing: 6) {
                                                     Text(post.title)

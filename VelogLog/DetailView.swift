@@ -8,11 +8,24 @@
 import SwiftUI
 
 struct DetailView: View {
+    
+    @State private var showShareSheet = false
+    var url: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        CustomWKWebView(url: url)
+            .navigationBarItems(trailing: HStack {
+                Button(action: {
+                    showShareSheet = true
+                }) {
+                    Image(systemName: "square.and.arrow.up")
+                }
+                .sheet(isPresented: $showShareSheet) {
+                    // presentationDetents로 높이 설정
+                    ShareSheet(activityItems: [URL(string: url)!])
+                        .presentationDetents([.fraction(0.6), .medium, .large]) // 높이 설정
+                        .presentationDragIndicator(.visible) // 드래그 인디케이터 추가
+                }
+            })
     }
-}
-
-#Preview {
-    DetailView()
 }
