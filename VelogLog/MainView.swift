@@ -15,169 +15,166 @@ struct MainView: View {
     @State private var user: User?
     
     @State var isPresented: Bool = false
-
+    
     @State var showWeb: Bool = false
     @State var inputUserId: String = ""
-//    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+    //    @State var userIdTemp: String = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
     @State var userIdTemp: String = UserDefaults.shared.string(forKey: "userId") ?? "" // set
     
     let pageSize = 10
     
     var body: some View {
-        NavigationView {
+        VStack {
             VStack {
-                VStack {
-                    
-                    HStack {
-                        if (user != nil && !userIdTemp.isEmpty) {
-                            HStack {
-                                AsyncImage(url: URL(string: (user?.profile.thumbnail)!)) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                } placeholder: {
-                                    Image(systemName: "photo")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding(14)
-                                        .foregroundColor(Color.gray)
-                                        
-                                }
-                                .background(Color("LightGrayColor"))
-                                .clipShape(Circle())
-                                .frame(width: 48)
-                                
-                                
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text((user?.profile.display_name)!)
-                                        .font(.system(size: 20))
-                                        .fontWeight(.bold)
-                                    
-                                    Text((user?.profile.short_bio)!)
-                                        .font(.system(size: 14))
-                                        .foregroundColor(.gray)
-                                        .lineLimit(1)
-                                }
-                                
-                                
+                HStack {
+                    if (user != nil && !userIdTemp.isEmpty) {
+                        HStack {
+                            AsyncImage(url: URL(string: (user?.profile.thumbnail)!)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                            } placeholder: {
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(14)
+                                    .foregroundColor(Color.gray)
                                 
                             }
-                        } else {
-                            Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "사용자를 찾을 수 없어요")
-                                .font(.system(size: 20))
-                                .fontWeight(.bold)
-                                .padding(.trailing, 10)
-                        }
-                        
-                        Spacer(minLength: 4)
-                        
-                        Button(action: {
-                            self.isPresented.toggle()
-                            refreshData()
+                            .background(Color("LightGrayColor"))
+                            .clipShape(Circle())
+                            .frame(width: 48)
                             
-                        }, label: {
-                            Image(systemName: "square.and.pencil")
-                                .foregroundStyle(.blue)
-                                .font(.system(size: 24))
-                        })
-                        .padding(.trailing, 2)
-                        
-
-                        NavigationLink { HelpView() } label: {
-                            Image(systemName: "questionmark.circle")
-                                .foregroundStyle(.gray)
-                                .font(.system(size: 24))
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text((user?.profile.display_name)!)
+                                    .font(.system(size: 20))
+                                    .fontWeight(.bold)
+                                
+                                Text((user?.profile.short_bio)!)
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.gray)
+                                    .lineLimit(1)
+                            }
+                            
+                            
+                            
                         }
+                    } else {
+                        Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "사용자를 찾을 수 없어요")
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                            .padding(.trailing, 10)
+                    }
+                    
+                    Spacer(minLength: 4)
+                    
+                    Button(action: {
+                        self.isPresented.toggle()
+                        refreshData()
+                        
+                    }, label: {
+                        Image(systemName: "square.and.pencil")
+                            .foregroundStyle(.blue)
+                            .font(.system(size: 24))
+                    })
+                    .padding(.trailing, 2)
+                    
+                    
+                    NavigationLink { HelpView() } label: {
+                        Image(systemName: "questionmark.circle")
+                            .foregroundStyle(.gray)
+                            .font(.system(size: 24))
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 30)
-                .padding(.bottom, 10)
-                
-                VStack {
-                    if (posts.isEmpty) {
-                        VStack {
-                            Spacer()
-                            Text("리스트가 비어있어요")
-                            Spacer()
-                        }
-                        
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 30)
+            .padding(.bottom, 10)
+            
+            VStack {
+                if (posts.isEmpty) {
+                    VStack {
+                        Spacer()
+                        Text("리스트가 비어있어요")
+                        Spacer()
                     }
-                    else {
-                        ScrollView {
-                            LazyVStack {
-                                ForEach(posts) { post in
-                                    VStack {
-                                        NavigationLink(destination: DetailView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
-                                            HStack {
-                                                VStack(alignment: .leading, spacing: 6) {
-                                                    Text(post.title)
-                                                        .foregroundColor(Color("DefaultTextColor"))
-                                                        .lineSpacing(2)
-                                                        .font(.system(size: 16))
-                                                        .multilineTextAlignment(.leading)
-                                                    Text(formatDate(date: post.released_at))
-                                                        .foregroundColor(.gray)
-                                                        .font(.system(size: 14))
-                                                    
-                                                }
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                
-                                                Spacer(minLength: 4)
-                                                
-                                                Image(systemName: "chevron.right")
-                                                    .font(.system(size: 14))
+                    
+                }
+                else {
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(posts) { post in
+                                VStack {
+                                    NavigationLink(destination: DetailView(url: "https://velog.io/@\(userIdTemp)/\(post.url_slug)")) {
+                                        HStack {
+                                            VStack(alignment: .leading, spacing: 6) {
+                                                Text(post.title)
+                                                    .foregroundColor(Color("DefaultTextColor"))
+                                                    .lineSpacing(2)
+                                                    .font(.system(size: 16))
+                                                    .multilineTextAlignment(.leading)
+                                                Text(formatDate(date: post.released_at))
                                                     .foregroundColor(.gray)
+                                                    .font(.system(size: 14))
+                                                
                                             }
-                                            .padding(.horizontal, 20)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            
+                                            Spacer(minLength: 4)
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.gray)
                                         }
-                                        .padding(.vertical, 4)
-                                        Divider()
+                                        .padding(.horizontal, 20)
                                     }
-                                    .onAppear {
-                                        guard let index = posts.firstIndex(where: {$0.id == post.id}) else { return }
-                                        
-                                        if index % pageSize == (pageSize - 1) {
-                                            Task {
-                                                do {
-                                                    try await loadMorePosts()
-                                                } catch (let error) {
-                                                    print("Unable to get data : \(error)")
-                                                }
+                                    .padding(.vertical, 4)
+                                    Divider()
+                                }
+                                .onAppear {
+                                    guard let index = posts.firstIndex(where: {$0.id == post.id}) else { return }
+                                    
+                                    if index % pageSize == (pageSize - 1) {
+                                        Task {
+                                            do {
+                                                try await loadMorePosts()
+                                            } catch (let error) {
+                                                print("Unable to get data : \(error)")
                                             }
                                         }
                                     }
                                 }
-//                                .trackScrollOffset()
                             }
-//                            .trackScrollOffset()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            
+                            //                                .trackScrollOffset()
                         }
+                        //                            .trackScrollOffset()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        
                     }
-
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity)
-                .overlay(
-                    
-                    CustomRefresher()
-                        .refreshable {
-                            refreshData()
-                            fetchUserId()
-                        }
-                        .padding(20)
-                    
-                    //오른쪽 하단에 버튼 고정
-                    ,alignment: .bottomTrailing
-                )
                 
             }
+            .frame(maxWidth: .infinity)
+            .overlay(
+                
+                CustomRefresher()
+                    .refreshable {
+                        refreshData()
+                        fetchUserId()
+                    }
+                    .padding(20)
+                
+                //오른쪽 하단에 버튼 고정
+                ,alignment: .bottomTrailing
+            )
+            
         }
         .alert("사용자 ID", isPresented: $isPresented) {
             TextField("사용자 ID를 입력하세요", text: $inputUserId)
             Button("확인") {
-//                UserDefaultsManager.setData(value: inputUserId, key: .userId)
+                //                UserDefaultsManager.setData(value: inputUserId, key: .userId)
                 UserDefaults.shared.set(inputUserId, forKey: "userId")
                 fetchUserId()
                 
@@ -208,7 +205,7 @@ struct MainView: View {
     }
     
     private func refreshData() {
-//        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
+        //        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
         let userId = UserDefaults.shared.string(forKey: "userId")
         
         guard userId != nil else {
@@ -246,7 +243,7 @@ struct MainView: View {
     }
     
     private func fetchUserId() {
-//        self.userIdTemp = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
+        //        self.userIdTemp = UserDefaultsManager.getData(type: String.self, forKey: .userId) ?? ""
         self.userIdTemp = UserDefaults.shared.string(forKey: "userId") ?? ""
     }
     
@@ -359,7 +356,7 @@ struct MainView: View {
             }
         }
     }
-
+    
 }
 
 
