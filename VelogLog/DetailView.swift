@@ -27,5 +27,6 @@ struct DetailView: View {
                         .presentationDragIndicator(.visible) // 드래그 인디케이터 추가
                 }
             })
+            .toolbar(.hidden, for: .tabBar)
     }
 }
