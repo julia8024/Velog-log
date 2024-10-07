@@ -19,7 +19,7 @@ struct ContentView: View {
                     }
                 }
         } else {
-            MainView()
+            BottomTabView()
         }
     }
 }
