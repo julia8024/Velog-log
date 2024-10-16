@@ -25,83 +25,75 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                HStack {
-                    if (user != nil && !userIdTemp.isEmpty) {
-                        HStack {
-                            AsyncImage(url: URL(string: (user?.profile.thumbnail)!)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                            } placeholder: {
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding(14)
-                                    .foregroundColor(Color.gray)
-                                
-                            }
-                            .background(Color("LightGrayColor"))
-                            .clipShape(Circle())
-                            .frame(width: 48)
-                            
-                            
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text((user?.profile.display_name)!)
-                                    .font(.system(size: 20))
-                                    .fontWeight(.bold)
-                                
-                                Text((user?.profile.short_bio)!)
-                                    .font(.system(size: 14))
-                                    .foregroundColor(.gray)
-                                    .lineLimit(1)
-                            }
-                            
-                            
+            if (user != nil && !userIdTemp.isEmpty) {
+                VStack {
+                    HStack {
+                        
+                        AsyncImage(url: URL(string: (user?.profile.thumbnail)!)) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                        } placeholder: {
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .padding(14)
+                                .foregroundColor(Color.gray)
                             
                         }
-                    } else {
-                        Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "사용자를 찾을 수 없어요")
-                            .font(.system(size: 20))
-                            .fontWeight(.bold)
-                            .padding(.trailing, 10)
-                    }
-                    
-                    Spacer(minLength: 4)
-                    
-                    Button(action: {
-                        self.isPresented.toggle()
-                        refreshData()
+                        .background(Color("LightGrayColor"))
+                        .clipShape(Circle())
+                        .frame(width: 48)
                         
-                    }, label: {
-                        Image(systemName: "square.and.pencil")
-                            .foregroundStyle(.blue)
-                            .font(.system(size: 24))
-                    })
-                    .padding(.trailing, 2)
-                    
-                    
-                    NavigationLink { HelpView() } label: {
-                        Image(systemName: "questionmark.circle")
-                            .foregroundStyle(.gray)
-                            .font(.system(size: 24))
+                        
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text((user?.profile.display_name)!)
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                            
+                            Text((user?.profile.short_bio)!)
+                                .font(.system(size: 14))
+                                .foregroundColor(.gray)
+                                .lineLimit(1)
+                        }
+                        
+                        Spacer(minLength: 4)
+                        
+                        Button(action: {
+                            self.isPresented.toggle()
+                            refreshData()
+                            
+                        }, label: {
+                            Image(systemName: "square.and.pencil")
+                                .foregroundStyle(.blue)
+                                .font(.system(size: 24))
+                        })
+                        
                     }
+                    
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 30)
+                .padding(.bottom, 10)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 30)
-            .padding(.bottom, 10)
-            
             VStack {
-                if (posts.isEmpty) {
+                if (user == nil || userIdTemp.isEmpty) {
                     VStack {
                         Spacer()
-                        Text("리스트가 비어있어요")
+                        Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "\"\(userIdTemp)\" 사용자를 찾을 수 없어요")
+                            .font(.system(size: 16))
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom, 10)
+                        StyledButton(text: "사용자 ID로 불러오기", action: {
+                            self.isPresented.toggle()
+                            refreshData()
+                        })
                         Spacer()
                     }
-                    
+                    .padding(20)
                 }
-                else {
+                
+                if (!posts.isEmpty) {
                     ScrollView {
                         LazyVStack {
                             ForEach(posts) { post in
