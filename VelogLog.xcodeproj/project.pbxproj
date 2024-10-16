@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F227F9AE2CB4403700ABD659 /* BottomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9AD2CB4403700ABD659 /* BottomTabView.swift */; };
 		F227F9B32CB4468300ABD659 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9B22CB4468300ABD659 /* MainView.swift */; };
+		F227F9B62CBFE5F400ABD659 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9B52CBFE5F400ABD659 /* StyledButton.swift */; };
 		F24054972C2854A700A8C38C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24054962C2854A700A8C38C /* Post.swift */; };
 		F2620CF92CA07EC900BDEF4D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2620CF82CA07EC900BDEF4D /* DetailView.swift */; };
 		F2620CFB2CA081F800BDEF4D /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2620CFA2CA081F800BDEF4D /* ShareSheet.swift */; };
@@ -66,6 +67,7 @@
 /* Begin PBXFileReference section */
 		F227F9AD2CB4403700ABD659 /* BottomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTabView.swift; sourceTree = "<group>"; };
 		F227F9B22CB4468300ABD659 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F227F9B52CBFE5F400ABD659 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
 		F24054962C2854A700A8C38C /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F2620CF82CA07EC900BDEF4D /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		F2620CFA2CA081F800BDEF4D /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
@@ -120,6 +122,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F227F9B42CBFE5D800ABD659 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				F227F9B52CBFE5F400ABD659 /* StyledButton.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		F24054952C28549900A8C38C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +165,7 @@
 			children = (
 				F2A68F992C4AD15B006211BE /* Info.plist */,
 				F2A68F8B2C4584AB006211BE /* VelogLog.entitlements */,
+				F227F9B42CBFE5D800ABD659 /* Component */,
 				F2A68F742C30645C006211BE /* Helper */,
 				F24054952C28549900A8C38C /* Model */,
 				F29A7D7E2C1F51750053745D /* VelogLogApp.swift */,
@@ -329,6 +340,7 @@
 				F2A68F9D2C4D0169006211BE /* ContentView.swift in Sources */,
 				F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */,
 				F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */,
+				F227F9B62CBFE5F400ABD659 /* StyledButton.swift in Sources */,
 				F227F9B32CB4468300ABD659 /* MainView.swift in Sources */,
 				F29A7D812C1F51750053745D /* MainView.swift in Sources */,
 				F2A68F8E2C4A92AC006211BE /* HelpView.swift in Sources */,
