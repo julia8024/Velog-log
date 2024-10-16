@@ -150,13 +150,16 @@ struct MainView: View {
             }
             .frame(maxWidth: .infinity)
             .overlay(
-                
-                CustomRefresher()
-                    .refreshable {
-                        refreshData()
-                        fetchUserId()
+                VStack {
+                    if (!posts.isEmpty) {
+                        CustomRefresher()
+                            .refreshable {
+                                refreshData()
+                                fetchUserId()
+                            }
+                            .padding(20)
                     }
-                    .padding(20)
+                }
                 
                 //오른쪽 하단에 버튼 고정
                 ,alignment: .bottomTrailing
