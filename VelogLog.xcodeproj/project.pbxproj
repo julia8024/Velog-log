@@ -13,6 +13,8 @@
 		F24054972C2854A700A8C38C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24054962C2854A700A8C38C /* Post.swift */; };
 		F2620CF92CA07EC900BDEF4D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2620CF82CA07EC900BDEF4D /* DetailView.swift */; };
 		F2620CFB2CA081F800BDEF4D /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2620CFA2CA081F800BDEF4D /* ShareSheet.swift */; };
+		F2911BC62CC0026400C7A878 /* UserIdListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2911BC52CC0026400C7A878 /* UserIdListView.swift */; };
+		F2911BC82CC0070A00C7A878 /* AddUserIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2911BC72CC0070A00C7A878 /* AddUserIdView.swift */; };
 		F29A7D7F2C1F51750053745D /* VelogLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A7D7E2C1F51750053745D /* VelogLogApp.swift */; };
 		F29A7D812C1F51750053745D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A7D802C1F51750053745D /* MainView.swift */; };
 		F29A7D832C1F51760053745D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29A7D822C1F51760053745D /* Assets.xcassets */; };
@@ -71,6 +73,8 @@
 		F24054962C2854A700A8C38C /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		F2620CF82CA07EC900BDEF4D /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		F2620CFA2CA081F800BDEF4D /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		F2911BC52CC0026400C7A878 /* UserIdListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdListView.swift; sourceTree = "<group>"; };
+		F2911BC72CC0070A00C7A878 /* AddUserIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserIdView.swift; sourceTree = "<group>"; };
 		F29A7D7B2C1F51750053745D /* VelogLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VelogLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29A7D7E2C1F51750053745D /* VelogLogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VelogLogApp.swift; sourceTree = "<group>"; };
 		F29A7D802C1F51750053745D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -169,11 +173,13 @@
 				F2A68F742C30645C006211BE /* Helper */,
 				F24054952C28549900A8C38C /* Model */,
 				F29A7D7E2C1F51750053745D /* VelogLogApp.swift */,
+				F2911BC72CC0070A00C7A878 /* AddUserIdView.swift */,
+				F29A7D802C1F51750053745D /* MainView.swift */,
+				F2911BC52CC0026400C7A878 /* UserIdListView.swift */,
+				F227F9B22CB4468300ABD659 /* MainView.swift */,
 				F2620CF82CA07EC900BDEF4D /* DetailView.swift */,
 				F2A68F8D2C4A92AC006211BE /* HelpView.swift */,
-				F227F9B22CB4468300ABD659 /* MainView.swift */,
 				F2A68F932C4AB542006211BE /* FeedbackView.swift */,
-				F29A7D802C1F51750053745D /* MainView.swift */,
 				F227F9AD2CB4403700ABD659 /* BottomTabView.swift */,
 				F2A68F9A2C4CFE8D006211BE /* SplashView.swift */,
 				F2A68F9C2C4D0169006211BE /* ContentView.swift */,
@@ -341,11 +347,13 @@
 				F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */,
 				F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */,
 				F227F9B62CBFE5F400ABD659 /* StyledButton.swift in Sources */,
+				F2911BC62CC0026400C7A878 /* UserIdListView.swift in Sources */,
 				F227F9B32CB4468300ABD659 /* MainView.swift in Sources */,
 				F29A7D812C1F51750053745D /* MainView.swift in Sources */,
 				F2A68F8E2C4A92AC006211BE /* HelpView.swift in Sources */,
 				F2620CFB2CA081F800BDEF4D /* ShareSheet.swift in Sources */,
 				F29A7D7F2C1F51750053745D /* VelogLogApp.swift in Sources */,
+				F2911BC82CC0070A00C7A878 /* AddUserIdView.swift in Sources */,
 				F24054972C2854A700A8C38C /* Post.swift in Sources */,
 				F2A68F9B2C4CFE8D006211BE /* SplashView.swift in Sources */,
 				F227F9AE2CB4403700ABD659 /* BottomTabView.swift in Sources */,

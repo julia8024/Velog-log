@@ -64,7 +64,7 @@ struct MainView: View {
                             refreshData()
                             
                         }, label: {
-                            Image(systemName: "square.and.pencil")
+                            Image(systemName: "person.badge.plus")
                                 .foregroundStyle(.blue)
                                 .font(.system(size: 24))
                         })
@@ -155,7 +155,6 @@ struct MainView: View {
                         CustomRefresher()
                             .refreshable {
                                 refreshData()
-                                fetchUserId()
                             }
                             .padding(20)
                     }
@@ -166,36 +165,17 @@ struct MainView: View {
             )
             
         }
-        .alert("사용자 ID", isPresented: $isPresented) {
-            TextField("사용자 ID를 입력하세요", text: $inputUserId)
-            Button("확인") {
-                //                UserDefaultsManager.setData(value: inputUserId, key: .userId)
-                UserDefaults.shared.set(inputUserId, forKey: "userId")
-                fetchUserId()
-                
-            }
-            .onChange(of: self.userIdTemp, {
-                fetchUser() { fetchedUser in
-                    if let fetchedUser = fetchedUser {
-                        user = fetchedUser
-                    } else {
-                        user = nil
-                    }
-                }
-                
-                fetchPosts(cursor: "") { fetchedPosts in
-                    if let fetchedPosts = fetchedPosts {
-                        posts = fetchedPosts
-                    }
-                }
-            })
+        .sheet(isPresented: $isPresented, content: {
+            UserIdListView(isPresented: $isPresented)
+        })
+        .onChange(of: isPresented) { old, new in
+            refreshData()
         }
         .onAppear {
             refreshData()
         }
         .refreshable {
             refreshData()
-            fetchUserId()
         }
     }
     
@@ -203,7 +183,9 @@ struct MainView: View {
         //        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
         let userId = UserDefaults.shared.string(forKey: "userId")
         
-        guard userId != nil else {
+        fetchUserId()
+        
+        guard userId != nil || userId != "" else {
             isPresented = true
             return
         }
