@@ -14,6 +14,7 @@ struct ContentView: View {
         if isLaunching {
             SplashView()
                 .onAppear {
+                    VersionChecker.shared.checkForVersionUpdate()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         isLaunching = false
                     }
