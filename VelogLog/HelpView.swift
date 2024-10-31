@@ -109,6 +109,11 @@ struct HelpView: View {
                     FeedbackView()
                     
                 }
+                
+                VStack {
+                    Text("Version \(UserDefaults.shared.string(forKey: "currentVersion") ?? "1.0")")
+                        .modifier(SmallText())
+                }
             }
             .padding(30)
         }
@@ -173,6 +178,14 @@ struct BodyText: ViewModifier {
             .font(.system(size: 16))
             .fontWeight(fontWeight)  // 매개변수로 받은 fontWeight 적용
             .lineSpacing(2)
+    }
+}
+
+struct SmallText: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 14))
+            .foregroundColor(.gray)
     }
 }
 
