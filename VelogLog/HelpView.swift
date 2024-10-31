@@ -11,7 +11,8 @@ import Alamofire
 struct HelpView: View {
     
     private var FAQs: [FAQModel] = [
-        FAQModel(question: "사용자 ID를 어떻게 확인하나요?", answer: "'https://velog.io/@userid/posts'처럼 velog.io의 url에서 @ 뒤에 있는 문자열이 사용자 ID입니다"),
+        FAQModel(question: "사용자 ID를 어떻게 확인하나요?", answer: "'https://velog.io/@userid/posts'처럼 velog.io의 url에서 @ 뒤에 있는 문자열이 사용자 ID입니다. (예시: 'https://velog.id/@julia8024/posts'인 경우, 사용자 ID는 julia8024)"),
+        FAQModel(question: "Velog 로그인은 안 되나요?", answer: "해당 앱은 Velog 공식 앱이 아니어서 velog 로그인 및 글 작성은 불가합니다. velog 회원 ID를 통한 포스트 열람 및 위젯 기능 등이 가능하며, 앱 스토어에 등록된 앱 소개 이미지를 확인하시어 원활한 앱 사용이 되시길 바랍니다.")
     ]
     
     let email: String = "julia8024@naver.com"
