@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F20F88972CD3A30B007564CC /* VersionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20F88962CD3A30B007564CC /* VersionChecker.swift */; };
 		F227F9AE2CB4403700ABD659 /* BottomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9AD2CB4403700ABD659 /* BottomTabView.swift */; };
 		F227F9B32CB4468300ABD659 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9B22CB4468300ABD659 /* MainView.swift */; };
 		F227F9B62CBFE5F400ABD659 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9B52CBFE5F400ABD659 /* StyledButton.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F20F88962CD3A30B007564CC /* VersionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionChecker.swift; sourceTree = "<group>"; };
 		F227F9AD2CB4403700ABD659 /* BottomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTabView.swift; sourceTree = "<group>"; };
 		F227F9B22CB4468300ABD659 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F227F9B52CBFE5F400ABD659 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				F2A68F7D2C31826F006211BE /* CustomRefresher.swift */,
 				F2A68F972C4AC944006211BE /* hideKeyboardExtension.swift */,
 				F2620CFA2CA081F800BDEF4D /* ShareSheet.swift */,
+				F20F88962CD3A30B007564CC /* VersionChecker.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				F2A68F8E2C4A92AC006211BE /* HelpView.swift in Sources */,
 				F2620CFB2CA081F800BDEF4D /* ShareSheet.swift in Sources */,
 				F29A7D7F2C1F51750053745D /* VelogLogApp.swift in Sources */,
+				F20F88972CD3A30B007564CC /* VersionChecker.swift in Sources */,
 				F2911BC82CC0070A00C7A878 /* AddUserIdView.swift in Sources */,
 				F24054972C2854A700A8C38C /* Post.swift in Sources */,
 				F2A68F9B2C4CFE8D006211BE /* SplashView.swift in Sources */,
@@ -528,7 +532,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = seheeJang.VelogLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -562,7 +566,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = seheeJang.VelogLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

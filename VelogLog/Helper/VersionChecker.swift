@@ -19,7 +19,7 @@ class VersionChecker {
         guard let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
         
         // 이전에 저장된 버전 가져오기
-        let savedVersion = UserDefaults.standard.string(forKey: currentVersion)
+        let savedVersion = UserDefaults.standard.string(forKey: "currentVersion")
         
         // 저장된 버전과 현재 버전을 비교하여 업데이트 알림 띄우기
         if let savedVersion = savedVersion, savedVersion != currentVersion {
