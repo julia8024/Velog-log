@@ -13,9 +13,10 @@ struct AddUserIdView: View {
     @State private var inputUserId: String = UserDefaults.shared.string(forKey: "userId") ?? ""
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("사용자 ID 입력")
-                .font(.system(size: 14))
+                .modifier(SmallTitle())
+            
             TextField("사용자 ID를 입력하세요", text: $inputUserId)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             StyledButton(text: "확인", action: {
@@ -28,5 +29,6 @@ struct AddUserIdView: View {
             })
             .disabled(inputUserId.isEmpty)
         }
+        .padding(.vertical, 20)
     }
 }

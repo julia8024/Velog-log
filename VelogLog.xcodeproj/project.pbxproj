@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F20F88972CD3A30B007564CC /* VersionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20F88962CD3A30B007564CC /* VersionChecker.swift */; };
+		F20F88992CFA39D7007564CC /* Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20F88982CFA39D7007564CC /* Modifier.swift */; };
 		F227F9AE2CB4403700ABD659 /* BottomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9AD2CB4403700ABD659 /* BottomTabView.swift */; };
 		F227F9B32CB4468300ABD659 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9B22CB4468300ABD659 /* MainView.swift */; };
 		F227F9B62CBFE5F400ABD659 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F227F9B52CBFE5F400ABD659 /* StyledButton.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		F20F88962CD3A30B007564CC /* VersionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionChecker.swift; sourceTree = "<group>"; };
+		F20F88982CFA39D7007564CC /* Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifier.swift; sourceTree = "<group>"; };
 		F227F9AD2CB4403700ABD659 /* BottomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTabView.swift; sourceTree = "<group>"; };
 		F227F9B22CB4468300ABD659 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F227F9B52CBFE5F400ABD659 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				F2A68F972C4AC944006211BE /* hideKeyboardExtension.swift */,
 				F2620CFA2CA081F800BDEF4D /* ShareSheet.swift */,
 				F20F88962CD3A30B007564CC /* VersionChecker.swift */,
+				F20F88982CFA39D7007564CC /* Modifier.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				F2A68F9D2C4D0169006211BE /* ContentView.swift in Sources */,
 				F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */,
 				F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */,
+				F20F88992CFA39D7007564CC /* Modifier.swift in Sources */,
 				F227F9B62CBFE5F400ABD659 /* StyledButton.swift in Sources */,
 				F2911BC62CC0026400C7A878 /* UserIdListView.swift in Sources */,
 				F227F9B32CB4468300ABD659 /* MainView.swift in Sources */,

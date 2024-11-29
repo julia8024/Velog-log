@@ -14,6 +14,7 @@ struct UserIdListView: View {
     @State var allUserIds: [String] = UserDefaultsManager.getUserIdList()
     
     @State var shouldRefresh: Bool = false
+    @State var isConfirming: Bool = false // 액션시트
     
     var body: some View {
         
@@ -22,44 +23,63 @@ struct UserIdListView: View {
                 .padding(.top, 10)
             
             if (!allUserIds.isEmpty) {
-                ScrollView {
-                    LazyVStack {
-                        ForEach(allUserIds, id: \.self) { ids in
-                            
-                            Button(action: {
-                                UserDefaults.shared.set(ids, forKey: "userId")
-                                refreshData()
-                                isPresented = false
-                            }, label: {
-                                VStack {
-                                    HStack {
-                                        Text(ids)
-                                            .foregroundColor(Color("DefaultTextColor"))
-                                        Spacer()
-                                        if (ids == userId) {
-                                            Text("default")
+                VStack (alignment: .leading, spacing: 10) {
+                    Text("저장된 사용자 ID")
+                        .modifier(SmallTitle())
+                    Divider()
+                    
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(allUserIds, id: \.self) { ids in
+                                
+                                Button(action: {
+                                    isConfirming = true
+                                }, label: {
+                                    VStack {
+                                        HStack {
+                                            Text(ids)
+                                                .modifier(BodyText(fontWeight: .regular))
+                                                .foregroundColor(Color("DefaultTextColor"))
+                                            
+                                            Spacer()
+                                            if (ids == userId) {
+                                                Text("기본")
+                                                    .modifier(SmallText())
+                                            }
                                         }
+                                        .padding(.vertical, 6)
                                     }
-                                    .padding(.vertical, 10)
-                                    
-                                    
+                                })
+                                .confirmationDialog(
+                                    "\(ids)에 대한 동작을 선택해주세요",
+                                    isPresented: $isConfirming
+                                ) {
+                                    Button("기본으로 설정") {
+                                        UserDefaults.shared.set(ids, forKey: "userId")
+                                        refreshData()
+                                        isPresented = false
+                                        isConfirming = false
+                                    }
+                                    Button("삭제", role: .destructive) {
+                                        deleteItems(ids)
+                                        refreshData()
+                                        isPresented = false
+                                        isConfirming = false
+                                    }
+                                    Button("취소", role: .cancel) {}
+                                } message: {
+                                    Text("\(ids)에 대한 동작을 선택해주세요 \n기본으로 설정된 ID로 위젯 등이 표시됩니다")
                                 }
-                            })
-                            .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                                Button {
-                                    deleteItems(ids)
-                                } label: {
-                                    Label("Delete", systemImage: "trash.circle")
-                                }
-                                .tint(.red)
+                                
+                                Divider()
+                                
                             }
-                            Divider()
-                            
                         }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.top, 30)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
