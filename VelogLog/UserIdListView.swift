@@ -51,7 +51,7 @@ struct UserIdListView: View {
                                     }
                                 })
                                 .confirmationDialog(
-                                    "\(ids)에 대한 동작을 선택해주세요",
+                                    "선택한 id에 대한 동작을 선택해주세요",
                                     isPresented: $isConfirming
                                 ) {
                                     Button("기본으로 설정") {
@@ -68,7 +68,7 @@ struct UserIdListView: View {
                                     }
                                     Button("취소", role: .cancel) {}
                                 } message: {
-                                    Text("\(ids)에 대한 동작을 선택해주세요 \n기본으로 설정된 ID로 위젯 등이 표시됩니다")
+                                    Text("선택한 id에 대한 동작을 선택해주세요 \n기본으로 설정된 ID로 위젯 등이 표시됩니다")
                                 }
                                 
                                 Divider()
