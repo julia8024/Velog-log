@@ -14,7 +14,9 @@ struct UserIdListView: View {
     @State var allUserIds: [String] = UserDefaultsManager.getUserIdList()
     
     @State var shouldRefresh: Bool = false
-    @State var isConfirming: Bool = false // 액션시트
+    
+    @State private var isConfirmingId: String? = nil
+
     
     var body: some View {
         
@@ -33,7 +35,8 @@ struct UserIdListView: View {
                             ForEach(allUserIds, id: \.self) { ids in
                                 
                                 Button(action: {
-                                    isConfirming = true
+                                    isConfirmingId = ids
+
                                 }, label: {
                                     VStack {
                                         HStack {
@@ -51,24 +54,27 @@ struct UserIdListView: View {
                                     }
                                 })
                                 .confirmationDialog(
-                                    "선택한 id에 대한 동작을 선택해주세요",
-                                    isPresented: $isConfirming
+                                    "\(ids)에 대한 동작을 선택해주세요",
+                                    isPresented: Binding(
+                                        get: { isConfirmingId == ids },
+                                        set: { if !$0 { isConfirmingId = nil } }
+                                    )
                                 ) {
                                     Button("기본으로 설정") {
                                         UserDefaults.shared.set(ids, forKey: "userId")
                                         refreshData()
                                         isPresented = false
-                                        isConfirming = false
+                                        isConfirmingId = nil
                                     }
                                     Button("삭제", role: .destructive) {
                                         deleteItems(ids)
                                         refreshData()
                                         isPresented = false
-                                        isConfirming = false
+                                        isConfirmingId = nil
                                     }
                                     Button("취소", role: .cancel) {}
                                 } message: {
-                                    Text("선택한 id에 대한 동작을 선택해주세요 \n기본으로 설정된 ID로 위젯 등이 표시됩니다")
+                                    Text("\(ids)에 대한 동작을 선택해주세요 \n기본으로 설정된 ID로 위젯 등이 표시됩니다")
                                 }
                                 
                                 Divider()
