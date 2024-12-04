@@ -181,11 +181,11 @@ struct MainView: View {
     
     private func refreshData() {
         //        let userId = UserDefaultsManager.getData(type: String.self, forKey: .userId)
-        let userId = UserDefaults.shared.string(forKey: "userId")
+        let userId = UserDefaults.shared.string(forKey: "userId") ?? ""
         
         fetchUserId()
         
-        guard userId != nil || userId != "" else {
+        guard userId != "" else {
             isPresented = true
             return
         }
@@ -234,7 +234,7 @@ struct MainView: View {
     }
     
     private func fetchUser(completion: @escaping (User?) -> Void) {
-        if UserDefaults.shared.string(forKey: "userId") == "" {
+        if UserDefaults.shared.string(forKey: "userId")!.isEmpty {
             return completion(nil)
         }
         

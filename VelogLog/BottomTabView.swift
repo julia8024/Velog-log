@@ -23,7 +23,7 @@ struct BottomTabView: View {
     @State private var selectedTab: Tabs = .Home
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             TabView(selection: $selectedTab) {
                 MainView()
                     .tag(Tabs.Home)
