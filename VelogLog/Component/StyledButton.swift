@@ -15,7 +15,7 @@ struct StyledButton: View {
     var body: some View {
         Button(action: action) {
             Text(text)
-                .foregroundColor(.white)
+                .foregroundColor(Color("DefaultColor"))
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(Color("DefaultTextColor"))
