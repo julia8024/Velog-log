@@ -59,12 +59,12 @@ struct User: Decodable, Identifiable {
 
 struct Profile: Decodable, Identifiable {
     var id: String
-    var thumbnail: String
+    var thumbnail: String?
     var display_name: String
     var short_bio: String
     var __typename: String
     
-    init(id: String, thumbnail: String, __typename: String) {
+    init(id: String, thumbnail: String?, __typename: String) {
         self.id = id
         self.display_name = ""
         self.short_bio = ""
@@ -72,7 +72,7 @@ struct Profile: Decodable, Identifiable {
         self.__typename = __typename
     }
     
-    init(id: String, display_name: String, short_bio: String, thumbnail: String, __typename: String) {
+    init(id: String, display_name: String, short_bio: String, thumbnail: String?, __typename: String) {
         self.id = id
         self.display_name = display_name
         self.short_bio = short_bio

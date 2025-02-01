@@ -29,7 +29,7 @@ struct MainView: View {
                 VStack {
                     HStack {
                         
-                        AsyncImage(url: URL(string: (user?.profile.thumbnail)!)) { image in
+                        AsyncImage(url: URL(string: (user?.profile.thumbnail) ?? "")) { image in
                             image
                                 .resizable()
                                 .scaledToFit()
