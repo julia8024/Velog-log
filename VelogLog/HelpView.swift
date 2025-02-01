@@ -15,6 +15,8 @@ struct HelpView: View {
         FAQModel(question: "Velog 로그인은 안 되나요?", answer: "해당 앱은 Velog 공식 앱이 아니어서 velog 로그인 및 글 작성은 불가합니다. velog 회원 ID를 통한 포스트 열람 및 위젯 기능 등이 가능하며, 앱 스토어에 등록된 앱 소개 이미지를 확인하시어 원활한 앱 사용이 되시길 바랍니다.")
     ]
     
+    private let currentVersion: String = UserDefaultsManager.getCurrentVersion()
+    
     let email: String = "julia8024@naver.com"
     @State var showCopyAlert: Bool = false
     
@@ -111,7 +113,7 @@ struct HelpView: View {
                 }
                 
                 VStack {
-                    Text("Version \(UserDefaults.shared.string(forKey: "currentVersion") ?? "1.0")")
+                    Text("Version \(currentVersion)")
                         .modifier(SmallText())
                 }
             }

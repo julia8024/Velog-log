@@ -55,14 +55,8 @@ class UserDefaultsManager {
         return getData(type: [String].self, forKey: .userIdList) ?? []
     }
     
-    
-    static func updateVersion(_ currentVersion: String) {
-        if !currentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            setData(value: currentVersion, key: .currentVersion)
-        } else {
-            setData(value: "1.0", key: .currentVersion) // 빈 문자열이면 1.0으로 저장
-        }
-        
-        
+    static func getCurrentVersion() -> String {
+        return getData(type: String.self, forKey: .currentVersion) ?? "1.0"
     }
+    
 }
