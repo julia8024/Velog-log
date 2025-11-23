@@ -50,6 +50,23 @@ struct HelpView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .padding(.bottom, 20)
+                    
+                    HStack {
+                        Text(lang.localized("settings_language"))
+                            .modifier(BodyText(fontWeight: .bold))
+                        
+                        Spacer()
+                        
+                        Picker(lang.localized("settings_language"), selection: $lang.current) {
+                            ForEach(AppLanguage.allCases, id: \.self) { language in
+                                Text(language.displayName)
+                                    .tag(language)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                    }
+                    
                 }
                 
                 Divider()
