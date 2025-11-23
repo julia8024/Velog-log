@@ -9,6 +9,14 @@ import SwiftUI
 import Alamofire
 
 struct HelpView: View {
+    @AppStorage("appearanceMode") private var appearanceRaw = AppearanceMode.system.rawValue
+    
+    private var appearanceBinding: Binding<AppearanceMode> {
+        Binding(
+            get: { AppearanceMode(rawValue: appearanceRaw) ?? .system },
+            set: { appearanceRaw = $0.rawValue }
+        )
+    }
     
     private var FAQs: [FAQModel] = [
         FAQModel(question: "사용자 ID를 어떻게 확인하나요?", answer: "'https://velog.io/@userid/posts'처럼 velog.io의 url에서 @ 뒤에 있는 문자열이 사용자 ID입니다. (예시: 'https://velog.id/@julia8024/posts'인 경우, 사용자 ID는 julia8024)"),
@@ -25,6 +33,20 @@ struct HelpView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
+                
+                VStack(alignment: .leading) {
+                    Text("설정")
+                        .modifier(Title())
+                    
+                    Picker("화면 모드", selection: appearanceBinding) {
+                        ForEach(AppearanceMode.allCases) { mode in
+                            Text(mode.title).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                Divider()
                 
                 VStack(alignment: .leading) {
                     Text("FAQ")
