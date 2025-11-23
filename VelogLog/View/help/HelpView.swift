@@ -88,15 +88,16 @@ struct HelpView: View {
                 VStack(alignment: .leading) {
                     Text(lang.localized("developer"))
                         .modifier(Title())
-                    HStack {
+                    HStack (alignment: .top) {
                         Image("developer_profile")
                             .resizable()
                             .aspectRatio(1.0, contentMode: .fit)
 //                            .clipped()
                             .clipShape(Circle())
                             .frame(width: 48)
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            VStack(alignment: .leading, spacing: 4) {
                                 Text(lang.localized("my_name"))
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
@@ -104,6 +105,7 @@ struct HelpView: View {
                                 Text(lang.localized("my_description"))
                                     .modifier(BodyText(fontWeight: .light))
                             }
+                            
                             NavigationLink(destination: DetailView(url: "https://velog.io/@julia8024/posts")) {
                                 Text(lang.localized("link_to_velog"))
                                     .modifier(BodyText(fontWeight: .regular))
