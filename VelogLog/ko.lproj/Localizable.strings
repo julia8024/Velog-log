@@ -7,6 +7,11 @@
 "bottom_tab_explore" = "Explore";
 "bottom_tab_settings" = "Settings";
 
+// appearance
+"appearance_system" = "시스템";
+"appearance_light" = "라이트";
+"appearance_dark" = "다크";
+
 // common
 "confirm" = "확인";
 "cancel" = "취소";
@@ -50,8 +55,22 @@
 "feedback_description_1" = "피드백을 남겨주세요!\n궁금한 점이나 개선 사항 모두 환영합니다 ☺️";
 "feedback_description_2" = "이메일 주소로 직접 보내주셔도 좋습니다!";
 
+"placeholder_feedback" = "의견을 자유롭게 남겨주세요";
+"send_feedback" = "피드백 보내기";
+
 // 복사
 "copy_success" = "클립보드에 복사되었습니다!";
 "copy_failed" = "클립보드 복사에 실패했습니다";
 "copy_faild_due_to_access_denied" = "클립보드 복사에 실패했습니다\n설정에서 권한을 확인해주세요";
 
+
+// mail settings
+"mail_subject" = "Velog-log 사용자 피드백";
+"mail_content" = "별점 : %@\n\n내용 : %@";
+
+// mail alert
+"cancelled_sending_mail" = "피드백 메일 발송이 취소되었습니다";
+"saved_mail" = "피드백 메일이 저장되었습니다";
+"sent_mail" = "피드백 메일이 발송되었습니다\n*메일 앱에서 발송 여부를 확인해주세요";
+"failed_sending_mail" = "피드백 메일 발송에 실패하였습니다";
+"alert_mail_default" = "문제가 발생했습니다. 잠시 후 다시 시도해주세요";

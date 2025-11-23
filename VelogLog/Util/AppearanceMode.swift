@@ -15,9 +15,9 @@ enum AppearanceMode: String, CaseIterable, Identifiable, Codable {
 
     var title: String {
         switch self {
-        case .system: return "시스템"
-        case .light:  return "라이트"
-        case .dark:   return "다크"
+        case .system: return "appearance_system"
+        case .light:  return "appearance_light"
+        case .dark:   return "appearance_dark"
         }
     }
 

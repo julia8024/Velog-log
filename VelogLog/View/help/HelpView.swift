@@ -19,12 +19,14 @@ struct HelpView: View {
         )
     }
     
-    private var FAQs: [FAQModel] = [
-        FAQModel(question: NSLocalizedString("faq_q_1", comment: ""),
-                 answer: NSLocalizedString("faq_a_1", comment: "")),
-        FAQModel(question: NSLocalizedString("faq_q_2", comment: ""),
-                 answer: NSLocalizedString("faq_a_2", comment: "")),
-    ]
+    private var FAQs: [FAQModel] {
+        [
+            FAQModel(question: lang.localized("faq_q_1"),
+                     answer: lang.localized("faq_a_1")),
+            FAQModel(question: lang.localized("faq_q_2"),
+                     answer: lang.localized("faq_a_2")),
+        ]
+    }
     
     private let currentVersion: String = UserDefaultsManager.getCurrentVersion()
     
@@ -46,7 +48,7 @@ struct HelpView: View {
                     
                     Picker(lang.localized("screen_mode"), selection: appearanceBinding) {
                         ForEach(AppearanceMode.allCases) { mode in
-                            Text(mode.title).tag(mode)
+                            Text(lang.localized(mode.title)).tag(mode)
                         }
                     }
                     .pickerStyle(.segmented)
@@ -195,13 +197,15 @@ enum ClipboardCopyStatus {
     case failAccess
 
     var message: String {
+        let lang = LanguageManager.shared
+        
         switch self {
         case .success:
-            return NSLocalizedString("copy_success", comment: "")
+            return lang.localized("copy_success")
         case .emptyString:
-            return NSLocalizedString("copy_failed", comment: "")
+            return lang.localized("copy_failed")
         case .failAccess:
-            return NSLocalizedString("copy_faild_due_to_access_denied", comment: "")
+            return lang.localized("copy_faild_due_to_access_denied")
         }
     }
 }

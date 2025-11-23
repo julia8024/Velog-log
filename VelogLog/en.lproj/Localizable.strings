@@ -7,6 +7,11 @@
 "bottom_tab_explore" = "Explore";
 "bottom_tab_settings" = "Settings";
 
+// appearance
+"appearance_system" = "system";
+"appearance_light" = "light";
+"appearance_dark" = "dark";
+
 // common
 "confirm" = "confirm";
 "cancel" = "cancel";
@@ -51,7 +56,21 @@
 "feedback_description_1" = "Share your feedback!\nQuestions, ideas, and suggestions are always welcome ☺️";
 "feedback_description_2" = "You can also email me directly!";
 
+"placeholder_feedback" = "Please share any feedback you have";
+"send_feedback" = "Send Feedback";
+
 // copy
 "copy_success" = "Copied to clipboard!";
 "copy_failed" = "Failed to copy to clipboard.";
 "copy_faild_due_to_access_denied" = "Failed to copy.\nPlease check clipboard permissions in Settings.";
+
+// mail settings
+"mail_subject" = "Velog-log User Feedback";
+"mail_content" = "Rating: %@\n\nMessage: %@";
+
+// mail alert
+"cancelled_sending_mail" = "You cancelled the feedback email";
+"saved_mail" = "Your feedback email has been saved";
+"sent_mail" = "Your feedback email has been sent.\n*Please check the Mail app for the final status";
+"failed_sending_mail" = "Couldn’t send the feedback email";
+"alert_mail_default" = "Something went wrong. Please try again later";

@@ -9,6 +9,8 @@ import SwiftUI
 import MessageUI
 
 struct FeedbackView: View {
+    @EnvironmentObject var lang: LanguageManager
+    
     var maxRating: Int = 5
     
     var offImage = Image(systemName: "star")
@@ -54,7 +56,7 @@ struct FeedbackView: View {
                         
                         // Placeholder Text
                         if messageBody.isEmpty {
-                            Text("의견을 자유롭게 남겨주세요")
+                            Text(lang.localized("placeholder_feedback"))
                                 .font(.system(size: 16))
                                 .fontWeight(.light)
                                 .foregroundColor(.gray)
@@ -72,7 +74,7 @@ struct FeedbackView: View {
                 Button(action: {
                     self.isShowingMailView.toggle()
                 }, label: {
-                    Text("피드백 보내기")
+                    Text(lang.localized("send_feedback"))
                         .font(.system(size: 16))
                 })
             }
@@ -90,7 +92,7 @@ struct FeedbackView: View {
         .onAppear (perform : UIApplication.shared.hideKeyboard)
         
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("피드백"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+            Alert(title: Text(lang.localized("feedback")), message: Text(alertMessage), dismissButton: .default(Text(lang.localized("confirm"))))
         }
     }
     
@@ -103,7 +105,16 @@ struct FeedbackView: View {
     }
     
     private var mailView: some View {
-        MailComposeViewControllerWrapper(recipient: .constant("julia8024@naver.com"), subject: .constant("Velog-log 사용자 피드백"), messageBody: .constant("별점 : \(ratingValue)\n\n내용 : \(messageBody)"),  result: self.$result, showAlert: self.$showAlert, alertMessage: self.$alertMessage)
+        MailComposeViewControllerWrapper(
+            recipient: .constant("julia8024@naver.com"),
+            subject: .constant(lang.localized("mail_subject")),
+            messageBody: .constant(
+                String(format: lang.localized("mail_content"), ratingValue, messageBody)
+            ),
+            result: self.$result,
+            showAlert: self.$showAlert,
+            alertMessage: self.$alertMessage
+        )
     }
 }
 
@@ -146,17 +157,19 @@ struct MailComposeViewControllerWrapper: UIViewControllerRepresentable {
     }
     
     func handleMailResult(_ result: MFMailComposeResult) {
+        let lang = LanguageManager.shared
+        
         switch result {
         case .cancelled:
-            showAlertWithMessage("피드백 메일 발송이 취소되었습니다")
+            showAlertWithMessage(lang.localized("cancelled_sending_mail"))
         case .saved:
-            showAlertWithMessage("피드백 메일이 저장되었습니다")
+            showAlertWithMessage(lang.localized("saved_mail"))
         case .sent:
-            showAlertWithMessage("피드백 메일이 발송되었습니다\n*메일 앱에서 발송 여부를 확인해주세요")
+            showAlertWithMessage(lang.localized("sent_mail"))
         case .failed:
-            showAlertWithMessage("피드백 메일 발송에 실패하였습니다")
+            showAlertWithMessage(lang.localized("failed_sending_mail"))
         @unknown default:
-            showAlertWithMessage("문제가 발생했습니다. 잠시 후 다시 시도해주세요")
+            showAlertWithMessage(lang.localized("alert_mail_default"))
         }
     }
     
