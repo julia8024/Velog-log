@@ -42,6 +42,12 @@
 		F2A68F9B2C4CFE8D006211BE /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F9A2C4CFE8D006211BE /* SplashView.swift */; };
 		F2A68F9D2C4D0169006211BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A68F9C2C4D0169006211BE /* ContentView.swift */; };
 		F2EC594F2ED30FA30090C03A /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC594E2ED30FA10090C03A /* AppearanceMode.swift */; };
+		F2EC59512ED319A80090C03A /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC59502ED319A00090C03A /* AppLanguage.swift */; };
+		F2EC59532ED319F90090C03A /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC59522ED319F00090C03A /* LanguageManager.swift */; };
+		F2EC59682ED32B900090C03A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2EC59662ED31B830090C03A /* Localizable.strings */; };
+		F2EC59692ED32B900090C03A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2EC59662ED31B830090C03A /* Localizable.strings */; };
+		F2EC596A2ED32B960090C03A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2EC59602ED31B010090C03A /* Localizable.strings */; };
+		F2EC596B2ED32B960090C03A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F2EC59602ED31B010090C03A /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +112,10 @@
 		F2A68F9A2C4CFE8D006211BE /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		F2A68F9C2C4D0169006211BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F2EC594E2ED30FA10090C03A /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
+		F2EC59502ED319A00090C03A /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
+		F2EC59522ED319F00090C03A /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		F2EC59612ED31B010090C03A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Localizable.strings; sourceTree = "<group>"; };
+		F2EC59672ED31B830090C03A /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,8 +220,11 @@
 				F24054952C28549900A8C38C /* Model */,
 				F297A61E2D4F7E9E0006828C /* View */,
 				F2A68F9C2C4D0169006211BE /* ContentView.swift */,
+				F2EC59522ED319F00090C03A /* LanguageManager.swift */,
 				F2A68F722C2FF602006211BE /* UserDefaultManager.swift */,
 				F29A7D7E2C1F51750053745D /* VelogLogApp.swift */,
+				F2EC59622ED31B5B0090C03A /* ko.lproj */,
+				F2EC595C2ED31AE40090C03A /* en.lproj */,
 				F29A7D822C1F51760053745D /* Assets.xcassets */,
 				F29A7D842C1F51760053745D /* Preview Content */,
 			);
@@ -264,9 +277,26 @@
 		F2EC594D2ED30F850090C03A /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				F2EC59502ED319A00090C03A /* AppLanguage.swift */,
 				F2EC594E2ED30FA10090C03A /* AppearanceMode.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		F2EC595C2ED31AE40090C03A /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				F2EC59602ED31B010090C03A /* Localizable.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		F2EC59622ED31B5B0090C03A /* ko.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				F2EC59662ED31B830090C03A /* Localizable.strings */,
+			);
+			path = ko.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,11 +364,12 @@
 			};
 			buildConfigurationList = F29A7D762C1F51750053745D /* Build configuration list for PBXProject "VelogLog" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
+				en,
 			);
 			mainGroup = F29A7D722C1F51750053745D;
 			packageReferences = (
@@ -360,6 +391,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29A7D862C1F51760053745D /* Preview Assets.xcassets in Resources */,
+				F2EC596A2ED32B960090C03A /* Localizable.strings in Resources */,
+				F2EC59682ED32B900090C03A /* Localizable.strings in Resources */,
 				F29A7D832C1F51760053745D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,6 +402,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F29A7D9F2C1F52590053745D /* Assets.xcassets in Resources */,
+				F2EC596B2ED32B960090C03A /* Localizable.strings in Resources */,
+				F2EC59692ED32B900090C03A /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +416,7 @@
 			files = (
 				F2A68F782C31417C006211BE /* CustomWKWebView.swift in Sources */,
 				F2A68F732C2FF602006211BE /* UserDefaultManager.swift in Sources */,
+				F2EC59532ED319F90090C03A /* LanguageManager.swift in Sources */,
 				F2A68F9D2C4D0169006211BE /* ContentView.swift in Sources */,
 				F29A7DA22C1F52590053745D /* LogWidget.intentdefinition in Sources */,
 				F2A68F7E2C31826F006211BE /* CustomRefresher.swift in Sources */,
@@ -400,6 +436,7 @@
 				F2A68F942C4AB542006211BE /* FeedbackView.swift in Sources */,
 				F2A68F982C4AC944006211BE /* hideKeyboardExtension.swift in Sources */,
 				F2620CF92CA07EC900BDEF4D /* DetailView.swift in Sources */,
+				F2EC59512ED319A80090C03A /* AppLanguage.swift in Sources */,
 				F2A68F902C4AA83F006211BE /* FAQ.swift in Sources */,
 				F2EC594F2ED30FA30090C03A /* AppearanceMode.swift in Sources */,
 			);
@@ -425,6 +462,25 @@
 			targetProxy = F29A7DA32C1F52590053745D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F2EC59602ED31B010090C03A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2EC59612ED31B010090C03A /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		F2EC59662ED31B830090C03A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F2EC59672ED31B830090C03A /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F29A7D872C1F51760053745D /* Debug */ = {
@@ -558,6 +614,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VelogLog/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Velog-log";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "피드백을 받기 위해 메일앱 접근 권한을 요청합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -569,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = seheeJang.VelogLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -594,6 +652,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VelogLog/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Velog-log";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "피드백을 받기 위해 메일앱 접근 권한을 요청합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -605,7 +665,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = seheeJang.VelogLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

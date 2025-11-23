@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct AddUserIdView: View {
+    @EnvironmentObject var lang: LanguageManager
     
     @Binding var shouldRefresh: Bool
     @State private var inputUserId: String = UserDefaults.shared.string(forKey: "userId") ?? ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("사용자 ID 입력")
+            Text(lang.localized("input_user_id"))
                 .modifier(SmallTitle())
             
-            TextField("사용자 ID를 입력하세요", text: $inputUserId)
+            TextField("placeholder_input_user_id", text: $inputUserId)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            StyledButton(text: "확인", action: {
+            StyledButton(text: lang.localized("confirm"), action: {
                 if !inputUserId.isEmpty {
                     UserDefaults.standard.set(inputUserId, forKey: "userId")
                     UserDefaultsManager.addUserId(inputUserId)

@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct VelogLogApp: App {
     @AppStorage("appearanceMode") private var appearanceRaw = AppearanceMode.system.rawValue
+    @StateObject var lang = LanguageManager()
     
     private var appearance: AppearanceMode {
         AppearanceMode(rawValue: appearanceRaw) ?? .system
@@ -19,6 +20,7 @@ struct VelogLogApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(lang)
                 .preferredColorScheme(appearance.colorScheme) // 전역 적용
         }
     }

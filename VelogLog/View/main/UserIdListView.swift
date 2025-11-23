@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserIdListView: View {
+    @EnvironmentObject var lang: LanguageManager
     
     @Binding var isPresented: Bool
     @State var userId: String = UserDefaults.shared.string(forKey: "userId") ?? ""
@@ -26,7 +27,7 @@ struct UserIdListView: View {
             
             if (!allUserIds.isEmpty) {
                 VStack (alignment: .leading, spacing: 10) {
-                    Text("저장된 사용자 ID")
+                    Text(lang.localized("saved_user_id"))
                         .modifier(SmallTitle())
                     Divider()
                     
@@ -46,7 +47,7 @@ struct UserIdListView: View {
                                             
                                             Spacer()
                                             if (ids == userId) {
-                                                Text("기본")
+                                                Text("default")
                                                     .modifier(SmallText())
                                             }
                                         }
@@ -54,27 +55,29 @@ struct UserIdListView: View {
                                     }
                                 })
                                 .confirmationDialog(
-                                    "\(ids)에 대한 동작을 선택해주세요",
+                                    String(format: lang.localized("description_to_select_by_id"), ids)
+                                    ,
                                     isPresented: Binding(
                                         get: { isConfirmingId == ids },
                                         set: { if !$0 { isConfirmingId = nil } }
                                     )
                                 ) {
-                                    Button("기본으로 설정") {
+                                    Button(lang.localized("set_as_default")) {
                                         UserDefaults.shared.set(ids, forKey: "userId")
                                         refreshData()
                                         isPresented = false
                                         isConfirmingId = nil
                                     }
-                                    Button("삭제", role: .destructive) {
+                                    Button(lang.localized("delete"), role: .destructive) {
                                         deleteItems(ids)
                                         refreshData()
                                         isPresented = false
                                         isConfirmingId = nil
                                     }
-                                    Button("취소", role: .cancel) {}
+                                    Button(lang.localized("cancel"), role: .cancel) {}
                                 } message: {
-                                    Text("\(ids)에 대한 동작을 선택해주세요 \n기본으로 설정된 ID로 위젯 등이 표시됩니다")
+                                    Text(String(format: lang.localized("description_to_select_by_id"), ids)
+                                         + "\n" + lang.localized("description_to_set_as_default"))
                                 }
                                 
                                 Divider()

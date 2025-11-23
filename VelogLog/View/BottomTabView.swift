@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BottomTabView: View {
+    @EnvironmentObject var lang: LanguageManager
+
     private enum Tabs {
         case Home, Settings
     }
@@ -30,14 +32,14 @@ struct BottomTabView: View {
                     .tabItem({
                         Image(systemName: "eyeglasses")
                             .environment(\.symbolVariants, .none)
-                        Text("Explore")
+                        Text(lang.localized("bottom_tab_explore"))
                     })
                 HelpView()
                     .tag(Tabs.Settings)
                     .tabItem({
                         Image(systemName: "gearshape")
                             .environment(\.symbolVariants, .none)
-                        Text("Settings")
+                        Text(lang.localized("bottom_tab_settings"))
                     })
             }
             .accentColor(Color("DefaultTextColor"))

@@ -10,6 +10,7 @@ import Alamofire
 import WebKit
 
 struct MainView: View {
+    @EnvironmentObject var lang: LanguageManager
     
     @State private var posts: [Post] = []
     @State private var user: User?
@@ -80,11 +81,13 @@ struct MainView: View {
                 if (user == nil || userIdTemp.isEmpty) {
                     VStack {
                         Spacer()
-                        Text(userIdTemp.isEmpty ? "누구의 글을 불러올까요?" : "\"\(userIdTemp)\" 사용자를 찾을 수 없어요")
+                        Text(userIdTemp.isEmpty ?
+                             lang.localized("user_prompt")
+                             : String(format: lang.localized("user_not_found_with_id"), userIdTemp))
                             .font(.system(size: 16))
                             .multilineTextAlignment(.center)
                             .padding(.bottom, 10)
-                        StyledButton(text: "사용자 ID로 불러오기", action: {
+                        StyledButton(text: lang.localized("get_by_user_id"), action: {
                             self.isPresented.toggle()
                             refreshData()
                         })

@@ -9,6 +9,7 @@ import SwiftUI
 import Alamofire
 
 struct HelpView: View {
+    @EnvironmentObject var lang: LanguageManager
     @AppStorage("appearanceMode") private var appearanceRaw = AppearanceMode.system.rawValue
     
     private var appearanceBinding: Binding<AppearanceMode> {
@@ -19,8 +20,10 @@ struct HelpView: View {
     }
     
     private var FAQs: [FAQModel] = [
-        FAQModel(question: "사용자 ID를 어떻게 확인하나요?", answer: "'https://velog.io/@userid/posts'처럼 velog.io의 url에서 @ 뒤에 있는 문자열이 사용자 ID입니다. (예시: 'https://velog.id/@julia8024/posts'인 경우, 사용자 ID는 julia8024)"),
-        FAQModel(question: "Velog 로그인은 안 되나요?", answer: "해당 앱은 Velog 공식 앱이 아니어서 velog 로그인 및 글 작성은 불가합니다. velog 회원 ID를 통한 포스트 열람 및 위젯 기능 등이 가능하며, 앱 스토어에 등록된 앱 소개 이미지를 확인하시어 원활한 앱 사용이 되시길 바랍니다.")
+        FAQModel(question: NSLocalizedString("faq_q_1", comment: ""),
+                 answer: NSLocalizedString("faq_a_1", comment: "")),
+        FAQModel(question: NSLocalizedString("faq_q_2", comment: ""),
+                 answer: NSLocalizedString("faq_a_2", comment: "")),
     ]
     
     private let currentVersion: String = UserDefaultsManager.getCurrentVersion()
@@ -35,10 +38,13 @@ struct HelpView: View {
             VStack(alignment: .leading, spacing: 30) {
                 
                 VStack(alignment: .leading) {
-                    Text("설정")
+                    Text(lang.localized("settings"))
                         .modifier(Title())
                     
-                    Picker("화면 모드", selection: appearanceBinding) {
+                    Text(lang.localized("screen_mode"))
+                        .modifier(BodyText(fontWeight: .bold))
+                    
+                    Picker(lang.localized("screen_mode"), selection: appearanceBinding) {
                         ForEach(AppearanceMode.allCases) { mode in
                             Text(mode.title).tag(mode)
                         }
@@ -61,7 +67,7 @@ struct HelpView: View {
                 Divider()
                 
                 VStack(alignment: .leading) {
-                    Text("만든 이")
+                    Text(lang.localized("developer"))
                         .modifier(Title())
                     HStack {
                         Image("developer_profile")
@@ -72,15 +78,15 @@ struct HelpView: View {
                             .frame(width: 48)
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("장세희")
+                                Text(lang.localized("my_name"))
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
                                 
-                                Text(" | 디자인하는 개발자")
+                                Text(lang.localized("my_description"))
                                     .modifier(BodyText(fontWeight: .light))
                             }
                             NavigationLink(destination: DetailView(url: "https://velog.io/@julia8024/posts")) {
-                                Text("velog 바로가기")
+                                Text(lang.localized("link_to_velog"))
                                     .modifier(BodyText(fontWeight: .regular))
                             }
                         }
@@ -91,14 +97,14 @@ struct HelpView: View {
                 Divider()
                 
                 VStack(alignment: .leading) {
-                    Text("피드백")
+                    Text(lang.localized("feedback"))
                         .modifier(Title())
                     
-                    Text("피드백을 남겨주세요!\n궁금한 점이나 개선 사항 모두 환영합니다 ☺️")
+                    Text(lang.localized("feedback_description_1"))
                         .modifier(BodyText(fontWeight: .light))
                         .padding(.bottom, 6)
                     
-                    Text("이메일 주소로 직접 보내주셔도 좋습니다!")
+                    Text(lang.localized("feedback_description_2"))
                         .modifier(BodyText(fontWeight: .light))
                     
                     HStack {
@@ -120,7 +126,7 @@ struct HelpView: View {
                             
                         })
                         .alert(isPresented: $showCopyAlert) {
-                            Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+                            Alert(title: Text(lang.localized("alert")), message: Text(alertMessage), dismissButton: .default(Text(lang.localized("confirm"))))
                         }
                     }
                     .padding(20)
@@ -174,11 +180,11 @@ enum ClipboardCopyStatus {
     var message: String {
         switch self {
         case .success:
-            return "클립보드에 복사되었습니다!"
+            return NSLocalizedString("copy_success", comment: "")
         case .emptyString:
-            return "클립보드 복사에 실패했습니다"
+            return NSLocalizedString("copy_failed", comment: "")
         case .failAccess:
-            return "클립보드 복사에 실패했습니다\n설정에서 권한을 확인해주세요"
+            return NSLocalizedString("copy_faild_due_to_access_denied", comment: "")
         }
     }
 }

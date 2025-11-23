@@ -1,0 +1,57 @@
+// how to use
+// @EnvironmentObject var lang: LanguageManager
+// lang.localized("key")
+// String(format: lang.localized("key"), value)
+
+// bottom tab
+"bottom_tab_explore" = "Explore";
+"bottom_tab_settings" = "Settings";
+
+// common
+"confirm" = "확인";
+"cancel" = "취소";
+"delete" = "삭제";
+"default" = "기본";
+"alert" = "알림";
+
+
+// prompts
+"user_prompt" = "누구의 글을 불러올까요?";
+"user_not_found_with_id" = "\"%@\" 사용자를 찾을 수 없어요";
+"get_by_user_id" = "사용자 ID로 불러오기";
+"input_user_id" = "사용자 ID 입력";
+"placeholder_input_user_id" = "사용자 ID를 입력하세요";
+
+// saved user id
+"saved_user_id" = "저장된 사용자 ID";
+"description_to_select_by_id" = "%@에 대한 동작을 선택해주세요";
+"set_as_default" = "기본으로 설정";
+"description_to_set_as_default" = "기본으로 설정된 ID로 위젯 등이 표시됩니다";
+
+// faq
+"faq_q_1" = "사용자 ID를 어떻게 확인하나요?";
+"faq_a_1" = "'https://velog.io/@userid/posts'처럼 velog.io의 url에서 @ 뒤에 있는 문자열이 사용자 ID입니다. (예시: 'https://velog.id/@julia8024/posts'인 경우, 사용자 ID는 julia8024)";
+
+"faq_q_2" = "Velog 로그인은 안 되나요?";
+"faq_a_2" = "해당 앱은 Velog 공식 앱이 아니어서 velog 로그인 및 글 작성은 불가합니다. velog 회원 ID를 통한 포스트 열람 및 위젯 기능 등이 가능하며, 앱 스토어에 등록된 앱 소개 이미지를 확인하시어 원활한 앱 사용이 되시길 바랍니다.";
+
+// settings
+"settings" = "설정";
+"screen_mode" = "화면 모드";
+"language" = "언어";
+"settings_language" = "언어 설정";
+
+"developer" = "만든 이";
+"my_name" = "장세희";
+"my_description" = " | 디자인하는 개발자";
+"link_to_velog" = "velog 바로가기";
+
+"feedback" = "피드백";
+"feedback_description_1" = "피드백을 남겨주세요!\n궁금한 점이나 개선 사항 모두 환영합니다 ☺️";
+"feedback_description_2" = "이메일 주소로 직접 보내주셔도 좋습니다!";
+
+// 복사
+"copy_success" = "클립보드에 복사되었습니다!";
+"copy_failed" = "클립보드 복사에 실패했습니다";
+"copy_faild_due_to_access_denied" = "클립보드 복사에 실패했습니다\n설정에서 권한을 확인해주세요";
+

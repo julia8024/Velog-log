@@ -1,0 +1,57 @@
+// how to use
+// @EnvironmentObject var lang: LanguageManager
+// lang.localized("key")
+// String(format: lang.localized("key"), value)
+
+// bottom tab
+"bottom_tab_explore" = "Explore";
+"bottom_tab_settings" = "Settings";
+
+// common
+"confirm" = "confirm";
+"cancel" = "cancel";
+"delete" = "delete";
+"default" = "default";
+"alert" = "alert";
+
+
+// prompts
+"user_prompt" = "Whose posts would you like to load?";
+"user_not_found_with_id" = "User \"%@\" could not be found.";
+"get_by_user_id" = "Load by User ID";
+"input_user_id" = "Enter User ID";
+"placeholder_input_user_id" = "Please enter a User ID.";
+
+// saved user id
+"saved_user_id" = "Saved User ID";
+"description_to_select_by_id" = "Choose an action for %@.";
+"set_as_default" = "Set as Default";
+"description_to_set_as_default" = "The default ID is used for widgets and other features.";
+
+// faq
+"faq_q_1" = "How do I find my User ID?";
+"faq_a_1" = "Your User ID is the text after @ in your velog.io URL. For example, if your URL is 'https://velog.io/@julia8024/posts', then your User ID is 'julia8024'.";
+
+"faq_q_2" = "Can I log in to Velog?";
+"faq_a_2" = "This app is not an official Velog app, so login and writing posts are not available. You can browse posts using your Velog User ID and use the widget features. Please refer to the App Store screenshots for details.";
+
+// settings
+"settings" = "Settings";
+"screen_mode" = "Appearance";
+"language" = "Language";
+"settings_language" = "Language Settings";
+
+"developer" = "Developer";
+"my_name" = "Sehee Jang";
+"my_description" = " | Developer Who Designs";
+"link_to_velog" = "Go to Velog";
+
+// feedback
+"feedback" = "Feedback";
+"feedback_description_1" = "Share your feedback!\nQuestions, ideas, and suggestions are always welcome ☺️";
+"feedback_description_2" = "You can also email me directly!";
+
+// copy
+"copy_success" = "Copied to clipboard!";
+"copy_failed" = "Failed to copy to clipboard.";
+"copy_faild_due_to_access_denied" = "Failed to copy.\nPlease check clipboard permissions in Settings.";
