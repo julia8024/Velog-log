@@ -8,6 +8,8 @@
 import Foundation
 
 class LanguageManager: ObservableObject {
+    static let shared = LanguageManager()
+    
     @Published var current: AppLanguage = .korean {
         didSet { UserDefaults.standard.set(current.rawValue, forKey: "appLanguage") }
     }
